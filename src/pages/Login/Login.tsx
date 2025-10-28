@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { useAuth } from "@/context/AuthContext";
@@ -8,10 +9,14 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepConnected, setKeepConnected] = useState(true);
+  const navigate = useNavigate(); // Hook para navegação
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login(email, password);
+    const success = login(email, password);
+    if (success) {
+      navigate("/product"); // Redireciona para produtos após login
+    }
   };
 
   return (

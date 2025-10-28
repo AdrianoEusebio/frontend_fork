@@ -11,11 +11,22 @@ function ProtectedRoute() {
 }
 
 export default function AppRoutes() {
+   const { isAuthenticated } = useAuth();
+
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/product" element={<ProductCategories />} />
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/"
+        element={<Navigate to={isAuthenticated ? "/product" : "/login"} />}
+      />
+      <Route
+        path="/product"
+        element={isAuthenticated ? <ProductCategories /> : <Navigate to="/login" />}
+      />
+      <Route
+        path="/login"
+        element={!isAuthenticated ? <Login /> : <Navigate to="/product" />}
+      />
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>

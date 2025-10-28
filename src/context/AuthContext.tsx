@@ -1,25 +1,24 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface AuthContextType {
-  isAuthenticated: Boolean;
+  isAuthenticated: boolean;
   user: { email: string } | null;
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string) => boolean;
   logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const isAuthenticated = true;
-  
   const [user, setUser] = useState<{ email: string } | null>(null);
+  const isAuthenticated = !!user;
 
   const login = (email: string, password: string) => {
     if (email === "admin@neoloq.com" && password === "12345678") {
       setUser({ email });
-      alert("Login realizado com sucesso!");
+      return true;
     } else {
-      alert("Credenciais inválidas.");
+      return false;
     }
   };
 
