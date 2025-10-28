@@ -1,12 +1,10 @@
 import './styles/global.css'
-import Navbar from './components/Navbar'
 import AppRoutes from './routes/AppRoutes'
 
 export default function App() {
   return (
     <>
-      <Navbar />
-      <main className="container">
+      <main className="min-h-screen bg-gray-50">
         <AppRoutes />
       </main>
     </>

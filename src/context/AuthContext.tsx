@@ -1,31 +1,34 @@
-import { createContext, useState } from 'react'
-import type { ReactNode } from 'react'
-import type { AuthContextType } from '../interfaces/User/AuthContextType'
-import type { User } from '../interfaces/User/User'
+import { createContext, useContext, useState, ReactNode } from "react";
 
-export const AuthContext = createContext<AuthContextType>({
-  user: null,
-  isAuthenticated: false,
-  login: () => {},
-  logout: () => {},
-})
+interface AuthContextType {
+  isAuthenticated: boolean;
+  user: { email: string } | null;
+  login: (email: string, password: string) => boolean;
+  logout: () => void;
+}
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-  function login(u: { name: string }) {
-    setUser({ name: u.name })
-  }
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<{ email: string } | null>(null);
+  const isAuthenticated = !!user;
 
-  function logout() {
-    setUser(null)
-  }
+  const login = (email: string, password: string) => {
+    if (email === "admin@neoloq.com" && password === "12345678") {
+      setUser({ email });
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, login, logout }}
-    >
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
