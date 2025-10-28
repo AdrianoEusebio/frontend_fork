@@ -24,3 +24,14 @@ a{color:var(--primary);text-decoration:none}
 .nav{display:flex;gap:12px;align-items:center}
 
 .card{background:white;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(2,6,23,0.08)}
+
+.login-page body {
+  background: white !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.login-page #root {
+  height: 100vh !important;
+  width: 100vw !important;
+}

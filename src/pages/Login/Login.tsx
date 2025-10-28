@@ -15,9 +15,9 @@ export function Login() {
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Lado esquerdo */}
-      <div className="flex flex-col justify-center items-center w-1/2 bg-white px-10">
+    <div className="flex h-screen w-screen fixed inset-0 bg-white login-page">
+      {/* Lado esquerdo - Conteúdo do login */}
+      <div className="flex flex-col justify-center items-center w-1/2 px-10">
         <div className="w-full max-w-sm">
           <h1 className="text-3xl font-semibold mb-4">Acesso</h1>
           <p className="text-gray-500 mb-6">Entre com seu e-mail e senha.</p>
@@ -65,7 +65,7 @@ export function Login() {
         </div>
       </div>
 
-      {/* Lado direito */}
+      {/* Lado direito - Banner/Branding */}
       <div className="w-1/2 flex items-center justify-center bg-gradient-to-br from-blue-400 to-sky-600 text-white text-5xl font-semibold">
         <span>
           Neo<span className="font-bold text-black">Loq</span>
