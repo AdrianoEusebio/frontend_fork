@@ -6,8 +6,10 @@ import { Select } from '@/components/Select/productSelect';
 import { Table } from '@/components/Table/productTable';
 import { Navbar } from '@/components/Navbar/productNavbar';
 import { mockProductCategories, ProductCategory } from '@/services/MockDataService';
+import { useNavigate } from 'react-router-dom'
 
 export const ProductCategories: React.FC = () => {
+  const navigate = useNavigate();
   const [tipo, setTipo] = useState('');
   const [descricao, setDescricao] = useState('');
   const [categories, setCategories] = useState<ProductCategory[]>(mockProductCategories);
@@ -49,7 +51,7 @@ export const ProductCategories: React.FC = () => {
   };
 
   const handleCadastrar = () => {
-    console.log('Cadastrar nova categoria');
+    navigate('/product/form');
   };
 
   return (
