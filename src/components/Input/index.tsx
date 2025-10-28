@@ -1,7 +1,15 @@
-import React from 'react'
+import React from "react";
 
-type Props = React.InputHTMLAttributes<HTMLInputElement>
-
-export default function Input(props: Props) {
-  return <input {...props} style={{ padding: '8px', borderRadius: 6, border: '1px solid #d1d5db' }} />
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
 }
+
+export const Input: React.FC<InputProps> = ({ label, ...props }) => (
+  <div className="flex flex-col space-y-1">
+    {label && <label className="text-sm font-medium">{label}</label>}
+    <input
+      {...props}
+      className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+);

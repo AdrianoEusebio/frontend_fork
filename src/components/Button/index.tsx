@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
 
-type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  children?: React.ReactNode
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
 }
 
-export default function Button({ children, ...rest }: Props) {
-  return (
-    <button {...rest} style={{ padding: '8px 12px', borderRadius: 6 }}>
-      {children}
-    </button>
-  )
-}
+export const Button: React.FC<ButtonProps> = ({ text, ...props }) => (
+  <button
+    {...props}
+    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg w-full"
+  >
+    {text}
+  </button>
+);

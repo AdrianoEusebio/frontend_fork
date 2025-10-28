@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import Home from '../pages/Home/Home'
 import Dashboard from '../pages/Dashboard/Dashboard'
-import Login from '../pages/Login/Login'
-import useAuth from '../hooks/useAuth'
+import { Login } from '../pages/Login/Login'
+import { useAuth } from '@/context/AuthContext'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
