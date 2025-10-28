@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/Input";
-import { Button } from "@/components/Button";
+import { Input } from "@/components/Input/LoginInput";
+import { Button } from "@/components/Button/LoginButton";
 import { useAuth } from "@/context/AuthContext";
 
 export function Login() {
