@@ -38,7 +38,7 @@ export const ProductCategories: React.FC = () => {
   };
 
   const handleEdit = (id: number) => {
-    console.log('Edit category:', id);
+    navigate('/product/edit');
   };
 
   const handleDelete = (id: number) => {
