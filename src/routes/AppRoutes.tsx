@@ -4,6 +4,7 @@ import { Login } from '../pages/Login/Login'
 import { useAuth } from '@/context/AuthContext'
 import { ProductCategories } from '../pages/Product/Product'
 import { ProductCategoryCadastration } from '../pages/ProductTypeCadastration/ProductTypeCadastration'
+import { ProductCategoryEdit } from '../pages/ProductTypeEdit/ProductTypeEdit'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -31,6 +32,10 @@ export default function AppRoutes() {
       <Route
         path='/product/form'
         element={isAuthenticated ? <ProductCategoryCadastration /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path='/product/edit'
+        element={isAuthenticated ? <ProductCategoryEdit /> : <Navigate to="/login" />}
       />
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

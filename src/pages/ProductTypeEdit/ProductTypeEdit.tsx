@@ -1,12 +1,16 @@
 import React from 'react';
+import { Navbar } from '@/components/Navbar/productTypeEditNavbar';
+import { ProductCategoryForm } from '@/components/Form/ProductTypeEditForm';
 import { useNavigate } from 'react-router-dom'
-import { Navbar } from '@/components/Navbar/productTypeCadastrationNavbar';
-import { ProductCategoryForm } from '@/components/Form/ProductTypeForm';
-import type { ProductCategory as ProductCategoryType } from '@/services/MockCadastroDataService';
+import {
+  mockProductCategory,
+  ProductCategory,
+} from '@/services/MockEditarDataService';
 
-export const ProductCategoryCadastration: React.FC = () => {
+export const ProductCategoryEdit: React.FC = () => {
   const navigate = useNavigate();
-  const handleSubmit = (data: ProductCategoryType) => {
+  const handleSubmit = (data: ProductCategory) => {
+    console.log('Dados atualizados:', data);
     navigate('/product');
   };
 
@@ -27,6 +31,7 @@ export const ProductCategoryCadastration: React.FC = () => {
         </div>
 
         <ProductCategoryForm
+          initialData={mockProductCategory}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
         />

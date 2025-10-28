@@ -1,0 +1,27 @@
+import React from 'react';
+
+interface CheckboxProps {
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  className?: string;
+}
+
+export const Checkbox: React.FC<CheckboxProps> = ({
+  label,
+  checked,
+  onChange,
+  className = '',
+}) => {
+  return (
+    <label className={`flex items-center gap-2 cursor-pointer ${className}`}>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+      />
+      <span className="text-sm text-gray-700">{label}</span>
+    </label>
+  );
+};
