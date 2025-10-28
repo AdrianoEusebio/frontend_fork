@@ -1,16 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 import { Navbar } from '@/components/Navbar/productNavbar';
 import { ProductCategoryForm } from '@/components/Form/ProductTypeForm';
 import type { ProductCategory as ProductCategoryType } from '@/services/MockCadastroDataService';
 
 export const ProductCategoryCadastration: React.FC = () => {
+  const navigate = useNavigate();
   const handleSubmit = (data: ProductCategoryType) => {
-    console.log('Dados do formulário:', data);
-    alert('Categoria de produto salva com sucesso!');
+    navigate('/product');
   };
 
   const handleCancel = () => {
-    console.log('Formulário cancelado');
+    navigate('/product');
   };
 
   return (
