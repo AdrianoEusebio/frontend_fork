@@ -9,10 +9,14 @@ interface ApiError extends Error {
 
 export class Api {
   private baseUrl: string
+  //constructor(baseUrl: string = import.meta.env.VITE_API_URL || '') {
+  //this.baseUrl = baseUrl
+  //}
+  | undefined
 
-  constructor(baseUrl: string = import.meta.env.VITE_API_URL || '') {
-    this.baseUrl = baseUrl
-  }
+  //constructor(baseUrl: string = import.meta.env.VITE_API_URL || '') {
+    //this.baseUrl = baseUrl
+  //}
 
   private async request<T>(path: string, config: RequestConfig = {}): Promise<T> {
     const { params, headers = {}, ...rest } = config

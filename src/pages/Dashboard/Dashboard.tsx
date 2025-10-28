@@ -11,7 +11,7 @@ export default function Dashboard() {
   return (
     <div className="container">
       <h2>Dashboard</h2>
-      <p>Welcome back{user ? `, ${user.name}` : ''}.</p>
+      <p>Welcome back{user ? `, USUARIO TESTE` : ''}.</p>
     </div>
   )
 }
