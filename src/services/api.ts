@@ -18,6 +18,7 @@ export class Api {
     //this.baseUrl = baseUrl
   //}
 
+  
   private async request<T>(path: string, config: RequestConfig = {}): Promise<T> {
     const { params, headers = {}, ...rest } = config
 
