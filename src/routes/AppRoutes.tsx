@@ -34,7 +34,7 @@ export default function AppRoutes() {
         element={isAuthenticated ? <ProductCategoryCadastration /> : <Navigate to="/login" />}
       />
       <Route 
-        path='/product/edit'
+        path="/product/edit/:id"
         element={isAuthenticated ? <ProductCategoryEdit /> : <Navigate to="/login" />}
       />
       <Route element={<ProtectedRoute />}>

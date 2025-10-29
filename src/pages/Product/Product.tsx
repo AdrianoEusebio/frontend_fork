@@ -1,26 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Trash2, Filter, Plus } from 'lucide-react';
 import { Button } from '@/components/Button/productButton';
 import { Input } from '@/components/Input/productInput';
 import { Select } from '@/components/Select/productSelect';
 import { Table } from '@/components/Table/productTable';
 import { Navbar } from '@/components/Navbar/productNavbar';
-import { mockProductCategories, ProductCategory } from '@/services/MockDataService';
+import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
 import { useNavigate } from 'react-router-dom'
 
 export const ProductCategories: React.FC = () => {
   const navigate = useNavigate();
   const [tipo, setTipo] = useState('');
   const [descricao, setDescricao] = useState('');
-  const [categories, setCategories] = useState<ProductCategory[]>(mockProductCategories);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () => {
+    const data = ProductCategoryService.getCategories();
+    setCategories(data);
+  };
 
   const handleClear = () => {
     setTipo('');
     setDescricao('');
+    loadCategories();
   };
 
   const handleFilter = () => {
-    let filtered = [...mockProductCategories];
+    let filtered = ProductCategoryService.getCategories();
 
     if (tipo) {
       filtered = filtered.filter((cat) =>
@@ -37,16 +47,22 @@ export const ProductCategories: React.FC = () => {
     setCategories(filtered);
   };
 
-  const handleEdit = (id: number) => {
-    navigate('/product/edit');
+  const handleEdit = (id: string) => {
+    navigate(`/product/edit/${id}`);
   };
 
-  const handleDelete = (id: number) => {
-    console.log('Delete category:', id);
-    setCategories(categories.filter((cat) => cat.id !== id));
+  const handleDelete = (id: string) => {
+    if (window.confirm('Tem certeza que deseja excluir esta categoria?')) {
+      const success = ProductCategoryService.deleteCategory(id);
+      if (success) {
+        loadCategories();
+      } else {
+        alert('Erro ao excluir categoria.');
+      }
+    }
   };
 
-  const handleDownload = (id: number) => {
+  const handleDownload = (id: string) => {
     console.log('Download category:', id);
   };
 
@@ -121,46 +137,6 @@ export const ProductCategories: React.FC = () => {
             </Button>
           </div>
 
-          <style>{`
-            .custom-table-wrapper table {
-              width: 100%;
-              background-color: white;
-              table-layout: auto;
-              min-width: 100%;
-            }
-            .custom-table-wrapper thead {
-              background-color: rgb(249 250 251);
-            }
-            .custom-table-wrapper th {
-              padding: 0.875rem 1.25rem;
-              text-align: left;
-              font-size: 0.6875rem;
-              font-weight: 700;
-              color: rgb(55 65 81);
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-              white-space: nowrap;
-              vertical-align: middle;
-            }
-            .custom-table-wrapper td {
-              padding: 0.875rem 1.25rem;
-              font-size: 0.8125rem;
-              font-weight: 500;
-              color: rgb(17 24 39);
-              white-space: nowrap;
-              vertical-align: middle;
-            }
-            .custom-table-wrapper tbody {
-              border-top: 1px solid rgb(229 231 235);
-            }
-            .custom-table-wrapper tbody tr {
-              border-bottom: 1px solid rgb(229 231 235);
-            }
-            .custom-table-wrapper tbody tr:hover {
-              background-color: rgb(249 250 251);
-              transition: background-color 0.2s;
-            }
-          `}</style>
           <div className="overflow-x-auto border border-gray-200 rounded-lg custom-table-wrapper -mx-6 sm:mx-0">
             <Table
               data={categories}

@@ -4,13 +4,7 @@ import { Select } from '@/components/Select/ProductTypeCadastrationSelect';
 import { Textarea } from '@/components/Textarea/ProductTypeCadastrationTextarea';
 import { Checkbox } from '@/components/Checkbox/productTypeCadastrationCheckbox';
 import { Button } from '@/components/Button/productTypeCadastrationButton';
-import {
-  equipmentTypes,
-  companies,
-  costCenters,
-  revenueCenters,
-  type ProductCategory
-} from '@/services/MockCadastroDataService';
+import { ProductCategory, equipmentTypes, companies, costCenters, revenueCenters } from '@/services/ProductCategoryService';
 
 interface ProductCategoryFormProps {
   initialData?: ProductCategory;
@@ -26,6 +20,15 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
   const [formData, setFormData] = useState<ProductCategory>(
     initialData || {
       id: '',
+      codigo: '',
+      descricao: '',
+      desconto: '',
+      valorDesconto: '',
+      empresa: '',
+      centroCusto: '',
+      centroReceb: '',
+      imprimirRelat: '',
+      aplicarAuto: '',
       equipmentType: '',
       description: '',
       company: '',
@@ -50,7 +53,18 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // Garantir que os campos principais estejam preenchidos
+    const submitData: ProductCategory = {
+      ...formData,
+      codigo: formData.codigo || formData.equipmentType || '',
+      descricao: formData.descricao || formData.description || '',
+      empresa: formData.empresa || formData.company || '',
+      centroCusto: formData.centroCusto || formData.costCenter || '',
+      centroReceb: formData.centroReceb || formData.revenueCenter || '',
+    };
+    
+    onSubmit(submitData);
   };
 
   return (
@@ -67,12 +81,14 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
           onChange={handleChange}
           placeholder="Informe um ID"
           required
+          disabled={!!initialData}
+          className={initialData ? 'bg-gray-50' : ''}
         />
 
         <Select
           label="Tipo de Equipamento"
           name="equipmentType"
-          value={formData.equipmentType}
+          value={formData.equipmentType || ''}
           onChange={handleChange}
           options={equipmentTypes}
           placeholder="Digite ou selecione uma das opções"
@@ -83,7 +99,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
           <Textarea
             label="Descrição"
             name="description"
-            value={formData.description}
+            value={formData.description || ''}
             onChange={handleChange}
             placeholder="Informe uma descrição"
             rows={1}
@@ -96,7 +112,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
         <Select
           label="Empresa"
           name="company"
-          value={formData.company}
+          value={formData.company || ''}
           onChange={handleChange}
           options={companies}
           placeholder="Digite ou selecione uma das opções"
@@ -106,7 +122,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
         <Select
           label="Centro de Custos"
           name="costCenter"
-          value={formData.costCenter}
+          value={formData.costCenter || ''}
           onChange={handleChange}
           options={costCenters}
           placeholder="Digite ou selecione uma das opções"
@@ -116,7 +132,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
         <Select
           label="Centro de Receitas"
           name="revenueCenter"
-          value={formData.revenueCenter}
+          value={formData.revenueCenter || ''}
           onChange={handleChange}
           options={revenueCenters}
           placeholder="Digite ou selecione uma das opções"
@@ -128,14 +144,14 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
         <Checkbox
           label="Imprimir no relatório de equipamentos"
           name="printEquipmentReport"
-          checked={formData.printEquipmentReport}
+          checked={formData.printEquipmentReport || false}
           onChange={handleChange}
         />
 
         <Checkbox
           label="Gera necessidade de número de série"
           name="generateSerialNumber"
-          checked={formData.generateSerialNumber}
+          checked={formData.generateSerialNumber !== false}
           onChange={handleChange}
         />
       </div>
