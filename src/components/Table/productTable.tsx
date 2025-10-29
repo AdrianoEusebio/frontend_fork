@@ -1,12 +1,12 @@
 import React from 'react';
 import { Download, Edit, Trash2 } from 'lucide-react';
-import { ProductCategory } from '@/services/MockDataService';
+import { ProductCategory } from '@/services/ProductCategoryService';
 
 interface TableProps {
   data: ProductCategory[];
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
-  onDownload: (id: number) => void;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+  onDownload: (id: string) => void;
 }
 
 export const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onDownload }) => {

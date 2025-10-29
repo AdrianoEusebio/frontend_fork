@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { Input } from '../Input/productTypeEditInput';
-import { Select } from '../Select/productTypeEditSelect';
-import { Textarea } from '../Textarea/productTypeEditTextarea';
-import { Checkbox } from '../Checkbox/productTypeEditCheckbox';
-import { Button } from '../Button/productTypeEditButton';
-import {
-  equipmentTypes,
-  companies,
-  costCenters,
-  revenueCenters,
-  type ProductCategory
-} from '@/services/MockEditarDataService';
+import { Input } from '@/components/Input/productTypeCadastrationInput';
+import { Select } from '@/components/Select/ProductTypeCadastrationSelect';
+import { Textarea } from '@/components/Textarea/ProductTypeCadastrationTextarea';
+import { Checkbox } from '@/components/Checkbox/productTypeCadastrationCheckbox';
+import { Button } from '@/components/Button/productTypeCadastrationButton';
+import { ProductCategory, equipmentTypes, companies, costCenters, revenueCenters } from '@/services/ProductCategoryService';
 
 interface ProductCategoryFormProps {
   initialData?: ProductCategory;
@@ -26,6 +20,15 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
   const [formData, setFormData] = useState<ProductCategory>(
     initialData || {
       id: '',
+      codigo: '',
+      descricao: '',
+      desconto: '',
+      valorDesconto: '',
+      empresa: '',
+      centroCusto: '',
+      centroReceb: '',
+      imprimirRelat: '',
+      aplicarAuto: '',
       equipmentType: '',
       description: '',
       company: '',
@@ -48,23 +51,22 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
     }));
   };
 
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: checked
-    }));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // Garantir que os campos principais estejam preenchidos
+    const submitData: ProductCategory = {
+      ...formData,
+      codigo: formData.codigo || formData.equipmentType || '',
+      descricao: formData.descricao || formData.description || '',
+      empresa: formData.empresa || formData.company || '',
+      centroCusto: formData.centroCusto || formData.costCenter || '',
+      centroReceb: formData.centroReceb || formData.revenueCenter || '',
+      imprimirRelat: formData.printEquipmentReport ? 'Sim' : 'Não',
+      aplicarAuto: formData.generateSerialNumber ? 'Sim' : 'Não'
+    };
+    
+    onSubmit(submitData);
   };
 
   return (
@@ -87,8 +89,9 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
 
         <Select
           label="Tipo de Equipamento"
-          value={formData.equipmentType}
-          onChange={(value) => handleSelectChange('equipmentType', value)}
+          name="equipmentType"
+          value={formData.equipmentType || ''}
+          onChange={handleChange}
           options={equipmentTypes}
           placeholder="Digite ou selecione uma das opções"
           required
@@ -98,7 +101,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
           <Textarea
             label="Descrição"
             name="description"
-            value={formData.description}
+            value={formData.description || ''}
             onChange={handleChange}
             placeholder="Informe uma descrição"
             rows={1}
@@ -110,8 +113,9 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <Select
           label="Empresa"
-          value={formData.company}
-          onChange={(value) => handleSelectChange('company', value)}
+          name="company"
+          value={formData.company || ''}
+          onChange={handleChange}
           options={companies}
           placeholder="Digite ou selecione uma das opções"
           required
@@ -119,8 +123,9 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
 
         <Select
           label="Centro de Custos"
-          value={formData.costCenter}
-          onChange={(value) => handleSelectChange('costCenter', value)}
+          name="costCenter"
+          value={formData.costCenter || ''}
+          onChange={handleChange}
           options={costCenters}
           placeholder="Digite ou selecione uma das opções"
           required
@@ -128,8 +133,9 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
 
         <Select
           label="Centro de Receitas"
-          value={formData.revenueCenter}
-          onChange={(value) => handleSelectChange('revenueCenter', value)}
+          name="revenueCenter"
+          value={formData.revenueCenter || ''}
+          onChange={handleChange}
           options={revenueCenters}
           placeholder="Digite ou selecione uma das opções"
           required
@@ -139,14 +145,16 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
       <div className="flex gap-6 mb-6">
         <Checkbox
           label="Imprimir no relatório de equipamentos"
-          checked={formData.printEquipmentReport}
-          onChange={(checked) => handleCheckboxChange('printEquipmentReport', checked)}
+          name="printEquipmentReport"
+          checked={formData.printEquipmentReport || false}
+          onChange={handleChange}
         />
 
         <Checkbox
           label="Gera necessidade de número de série"
-          checked={formData.generateSerialNumber}
-          onChange={(checked) => handleCheckboxChange('generateSerialNumber', checked)}
+          name="generateSerialNumber"
+          checked={formData.generateSerialNumber !== false}
+          onChange={handleChange}
         />
       </div>
 
@@ -158,7 +166,6 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
             value={formData.registrationDate || ''}
             placeholder="Log da data"
             disabled
-            className="bg-gray-50"
           />
 
           <Input
@@ -167,7 +174,6 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
             value={formData.registeredBy || ''}
             placeholder="Log do usuário"
             disabled
-            className="bg-gray-50"
           />
 
           <Input
@@ -176,7 +182,6 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
             value={formData.modificationDate || ''}
             placeholder="Log da data"
             disabled
-            className="bg-gray-50"
           />
 
           <Input
@@ -185,7 +190,6 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
             value={formData.modifiedBy || ''}
             placeholder="Log do usuário"
             disabled
-            className="bg-gray-50"
           />
         </div>
       )}
