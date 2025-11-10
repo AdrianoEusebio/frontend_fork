@@ -16,9 +16,13 @@ export const ProductCategoryCadastration: React.FC = () => {
     navigate('/product');
   };
 
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} />
       <div className="px-6 py-4">
         <div className="mb-6">
           <p className="text-sm text-gray-500 mb-2">

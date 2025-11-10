@@ -70,9 +70,13 @@ export const ProductCategories: React.FC = () => {
     navigate('/product/form');
   };
 
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} />
       <div className="w-full px-6 py-6">
         <div className="text-sm text-gray-600 mb-2">
           Páginas / Cadastros Básicos / Categorias de Produto
