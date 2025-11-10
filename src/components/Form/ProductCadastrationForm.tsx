@@ -1,97 +1,66 @@
 import React, { useState } from 'react';
 import { FileText, Receipt } from 'lucide-react';
-import { Input } from '@/components/Input/productCadastrationSelect';
+import { Input } from '@/components/Input/productCadastrationInput';
 import { Select } from '@/components/Select/productCadastratioSelect';
 import { TextArea } from '@/components/Textarea/productCadastrationTextarea';
 import { Button } from '@/components/Button/productCadastrationButton';
-
-interface ProductFormData {
-  tipoProduto: string;
-  codigo: string;
-  pathNumber: string;
-  marca: string;
-  descricao: string;
-  categoria: string;
-  fornecedor: string;
-  valorItem: string;
-  unidade: string;
-  estoqueMinimo: string;
-  descricaoResumida: string;
-  custoCliente: string;
-  medida: string;
-  validadeDesconto: string;
-  voltagem: string;
-  observacao: string;
-}
+import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions } from '@/services/ProductService';
 
 interface ProductFormProps {
-  onSubmit: (data: ProductFormData) => void;
+  initialData?: Product;
+  onSubmit: (data: Product) => void;
   onCancel: () => void;
 }
 
-export const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, onCancel }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({ 
+  initialData, 
+  onSubmit, 
+  onCancel 
+}) => {
   const [currentStep, setCurrentStep] = useState<'initial' | 'dadosBasicos' | 'informacoesContabeis'>('initial');
-  const [formData, setFormData] = useState<ProductFormData>({
-    tipoProduto: '',
-    codigo: '',
-    pathNumber: '',
-    marca: '',
-    descricao: '',
-    categoria: '',
-    fornecedor: '',
-    valorItem: '',
-    unidade: '',
-    estoqueMinimo: '',
-    descricaoResumida: '',
-    custoCliente: '',
-    medida: '',
-    validadeDesconto: '',
-    voltagem: '',
-    observacao: ''
-  });
+  const [formData, setFormData] = useState<Product>(
+    initialData || {
+      id: '',
+      status: 'Ativo',
+      codigo: '',
+      partnumber: '',
+      marca: '',
+      descricao: '',
+      unidade: '',
+      peso: 0,
+      valorCusto: 0,
+      descricaoResumida: '',
+      tipoProduto: '',
+      pathNumber: '',
+      categoria: '',
+      fornecedor: '',
+      valorItem: '',
+      estoqueMinimo: '',
+      custoCliente: '',
+      medida: '',
+      validadeDesconto: '',
+      voltagem: '',
+      observacao: ''
+    }
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // Garantir que os campos principais estejam preenchidos
+    const submitData: Product = {
+      ...formData,
+      partnumber: formData.partnumber || formData.pathNumber || '',
+      valorCusto: parseFloat(formData.valorItem) || 0,
+      peso: parseFloat(formData.medida) || 0
+    };
+    
+    onSubmit(submitData);
   };
 
-  const updateField = (field: keyof ProductFormData, value: string) => {
+  const updateField = (field: keyof Product, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
-
-  const tipoProdutoOptions = [
-    { value: 'Eletrônico', label: 'Eletrônico' },
-    { value: 'Eletrodoméstico', label: 'Eletrodoméstico' },
-    { value: 'Móveis', label: 'Móveis' },
-    { value: 'Informática', label: 'Informática' }
-  ];
-
-  const marcaOptions = [
-    { value: 'Samsung', label: 'Samsung' },
-    { value: 'LG', label: 'LG' },
-    { value: 'Sony', label: 'Sony' },
-    { value: 'Apple', label: 'Apple' }
-  ];
-
-  const categoriaOptions = [
-    { value: 'Celulares', label: 'Celulares' },
-    { value: 'Televisores', label: 'Televisores' },
-    { value: 'Computadores', label: 'Computadores' },
-    { value: 'Acessórios', label: 'Acessórios' }
-  ];
-
-  const fornecedorOptions = [
-    { value: 'Fornecedor A', label: 'Fornecedor A' },
-    { value: 'Fornecedor B', label: 'Fornecedor B' },
-    { value: 'Fornecedor C', label: 'Fornecedor C' }
-  ];
-
-  const unidadeOptions = [
-    { value: 'UN', label: 'Unidade' },
-    { value: 'CX', label: 'Caixa' },
-    { value: 'PC', label: 'Peça' },
-    { value: 'KG', label: 'Quilograma' }
-  ];
 
   if (currentStep === 'initial') {
     return (
@@ -284,14 +253,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, onCancel }) 
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Input
-              label="Custo Cliente"
-              value={formData.custoCliente}
-              onChange={(value) => updateField('custoCliente', value)}
-              placeholder="Informe o valor"
-              type="number"
-            />
-
-            <Input
               label="Medida"
               value={formData.medida}
               onChange={(value) => updateField('medida', value)}
@@ -388,4 +349,3 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, onCancel }) 
     </form>
   );
 };
-

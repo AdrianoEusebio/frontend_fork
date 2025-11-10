@@ -15,6 +15,7 @@ export const ProductVisualization = () => {
     toggleSelectAll,
     applyFilters,
     clearFilters,
+    deleteSelectedProducts
   } = useProducts();
 
   const handleNavigate = (path: string) => {
@@ -25,16 +26,44 @@ export const ProductVisualization = () => {
     navigate('/product/cadastration');
   };
 
-  const handleEditar = () => {
-    navigate('/product/edit');
+  const handleEditar = (id?: string) => {
+    if (id) {
+      navigate(`/product/edit/${id}`);
+    } else if (selectedProducts.length === 1) {
+      navigate(`/product/edit/${selectedProducts[0]}`);
+    } else {
+      alert('Selecione um produto para editar');
+    }
   };
 
-  const handleVisualizar = () => {
-    console.log('Visualizar Produto')
+  const handleVisualizar = (id?: string) => {
+    if (id) {
+      navigate(`/product/view/${id}`);
+    } else if (selectedProducts.length === 1) {
+      navigate(`/product/view/${selectedProducts[0]}`);
+    } else {
+      alert('Selecione um produto para visualizar');
+    }
   };
 
-  const handleDeletar = () => {
-    console.log('Deletar Produto')
+  const handleDeletar = (id?: string) => {
+    if (id || selectedProducts.length > 0) {
+      const idsToDelete = id ? [id] : selectedProducts;
+      const message = idsToDelete.length === 1 
+        ? 'Tem certeza que deseja excluir este produto?' 
+        : `Tem certeza que deseja excluir ${idsToDelete.length} produtos?`;
+      
+      if (window.confirm(message)) {
+        if (id) {
+          // Delete single product
+          // You'll need to implement this in the service
+        } else {
+          deleteSelectedProducts();
+        }
+      }
+    } else {
+      alert('Selecione pelo menos um produto para excluir');
+    }
   };
 
   return (
@@ -62,9 +91,9 @@ export const ProductVisualization = () => {
             onToggleSelect={toggleSelectProduct}
             onToggleSelectAll={toggleSelectAll}
             onCadastrar={handleCadastrar}
-            onEditar={handleEditar}
-            onVisualizar={handleVisualizar}
-            onDeletar={handleDeletar}
+            onEditar={() => handleEditar()}
+            onVisualizar={() => handleVisualizar()}
+            onDeletar={() => handleDeletar()}
           />
         )}
       </div>

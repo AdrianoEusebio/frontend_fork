@@ -1,11 +1,16 @@
-import { InputHTMLAttributes } from 'react';
+import React from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   required?: boolean;
 }
 
-export function Input({ label, required, ...props }: InputProps) {
+export const Input: React.FC<InputProps> = ({
+  label,
+  required,
+  className = '',
+  ...props
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-sm font-medium text-gray-700">
@@ -13,9 +18,9 @@ export function Input({ label, required, ...props }: InputProps) {
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       <input
-        className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+        className={`px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm ${className}`}
         {...props}
       />
     </div>
   );
-}
+};

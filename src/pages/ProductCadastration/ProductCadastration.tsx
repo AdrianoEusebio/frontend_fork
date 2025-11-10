@@ -2,36 +2,19 @@ import React from 'react';
 import { Navbar } from '@/components/Navbar/productCadastrationNavbar';
 import { ProductForm } from '@/components/Form/ProductCadastrationForm';
 import { useNavigate } from 'react-router-dom'
+import { ProductService, Product } from '@/services/ProductService';
 
-interface ProductFormData {
-  tipoProduto: string;
-  codigo: string;
-  pathNumber: string;
-  marca: string;
-  descricao: string;
-  categoria: string;
-  fornecedor: string;
-  valorItem: string;
-  unidade: string;
-  estoqueMinimo: string;
-  descricaoResumida: string;
-  custoCliente: string;
-  medida: string;
-  validadeDesconto: string;
-  voltagem: string;
-  observacao: string;
-}
-
-export const ProductCadastrion: React.FC = () => {
+export const ProductCadastration: React.FC = () => {
   const navigate = useNavigate();
-  const handleSubmit = (data: ProductFormData) => {
-    console.log('Produto cadastrado:', data);
+  
+  const handleSubmit = (data: Product) => {
+    ProductService.createProduct(data);
     alert('Produto cadastrado com sucesso!');
-    navigate(`/product/visualization}`);
+    navigate('/product/visualization');
   };
 
   const handleCancel = () => {
-    navigate(`/product/visualization}`);
+    navigate('/product/visualization');
   };
 
   const handleNavigate = (path: string) => {
