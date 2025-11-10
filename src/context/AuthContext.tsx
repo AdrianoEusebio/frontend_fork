@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = !!user;
 
   const login = (email: string, password: string) => {
-    if (email === "admin@neoloq.com" && password === "12345678") {
+    if (email === "admin@neoloc.com" && password === "12345678") {
       setUser({ email });
       return true;
     } else {

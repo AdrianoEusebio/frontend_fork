@@ -2,8 +2,11 @@ import { Navbar } from '@/components/Navbar/productVisualizationNavbar';
 import { ProductFilter } from '@/components/Filter/productVisualizationFilter';
 import { ProductTable } from '@/components/Table/productVisualizationTable';
 import { useProducts } from '@/hooks/useProducto';
+import { useNavigate } from 'react-router-dom'
 
-export const ProductsPage = () => {
+export const ProductVisualization = () => {
+  const navigate = useNavigate();
+
   const {
     products,
     loading,
@@ -14,9 +17,17 @@ export const ProductsPage = () => {
     clearFilters,
   } = useProducts();
 
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
+  const handleCadastrar = () => {
+    navigate('/product/cadastration');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} />
 
       <div className="px-8 py-6">
         <div className="mb-4">
@@ -38,9 +49,12 @@ export const ProductsPage = () => {
             selectedProducts={selectedProducts}
             onToggleSelect={toggleSelectProduct}
             onToggleSelectAll={toggleSelectAll}
+            onCadastrar={handleCadastrar}
           />
         )}
       </div>
     </div>
   );
 };
+
+export const ProductsPage = ProductVisualization;

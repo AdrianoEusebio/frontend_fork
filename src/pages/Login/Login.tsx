@@ -65,7 +65,7 @@ export function Login() {
           </form>
 
           <p className="text-gray-400 text-xs mt-10">
-            © 2025 NeoLoq. Todos os Direitos Reservados
+            © 2025 Neoc. Todos os Direitos Reservados
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@ export function Login() {
       {/* Lado direito - Banner/Branding */}
       <div className="w-1/2 flex items-center justify-center bg-gradient-to-br from-blue-400 to-sky-600 text-white text-5xl font-semibold">
         <span>
-          Neo<span className="font-bold text-black">Loq</span>
+          Neo<span className="font-bold text-black">Loc</span>
         </span>
       </div>
     </div>

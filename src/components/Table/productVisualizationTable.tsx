@@ -7,6 +7,7 @@ interface ProductTableProps {
   selectedProducts: string[];
   onToggleSelect: (id: string) => void;
   onToggleSelectAll: () => void;
+  onCadastrar: () => void;
 }
 
 export const ProductTable = ({
@@ -14,6 +15,7 @@ export const ProductTable = ({
   selectedProducts,
   onToggleSelect,
   onToggleSelectAll,
+  onCadastrar,
 }: ProductTableProps) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200">
@@ -30,7 +32,7 @@ export const ProductTable = ({
             <FileDown size={18} />
             Importar/Exportar
           </Button>
-          <Button variant="primary">
+          <Button variant="primary" onClick={onCadastrar}>
             <Plus size={18} />
             Cadastrar
           </Button>
