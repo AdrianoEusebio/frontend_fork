@@ -27,7 +27,7 @@ export const ProductTable = ({
     <div className="bg-white rounded-lg border border-gray-200">
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-800">
-          Tabela de Categorias de Produto
+          Tabela de Tipos de Produto
         </h3>
         <div className="flex gap-2">
           <Button variant="primary">
