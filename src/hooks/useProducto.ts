@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Product, ProductFilters } from '@/services/ProductsVisualizationTypeMockData';
-import { productService } from '@/services/ProductsVisualizationMockData';
+import { Product, ProductFilters, ProductService } from '@/services/ProductService';
 
 export const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -11,10 +10,10 @@ export const useProducts = () => {
     loadProducts();
   }, []);
 
-  const loadProducts = async () => {
+  const loadProducts = () => {
     setLoading(true);
     try {
-      const data = await productService.getAllProducts();
+      const data = ProductService.getProducts();
       setProducts(data);
     } catch (error) {
       console.error('Error loading products:', error);
@@ -23,10 +22,10 @@ export const useProducts = () => {
     }
   };
 
-  const applyFilters = async (filters: ProductFilters) => {
+  const applyFilters = (filters: ProductFilters) => {
     setLoading(true);
     try {
-      const data = await productService.filterProducts(filters);
+      const data = ProductService.filterProducts(filters);
       setProducts(data);
     } catch (error) {
       console.error('Error filtering products:', error);
@@ -53,6 +52,16 @@ export const useProducts = () => {
     loadProducts();
   };
 
+  const deleteSelectedProducts = () => {
+    if (selectedProducts.length > 0) {
+      const success = ProductService.deleteMultipleProducts(selectedProducts);
+      if (success) {
+        setSelectedProducts([]);
+        loadProducts();
+      }
+    }
+  };
+
   return {
     products,
     loading,
@@ -61,5 +70,7 @@ export const useProducts = () => {
     toggleSelectAll,
     applyFilters,
     clearFilters,
+    deleteSelectedProducts,
+    loadProducts
   };
 };

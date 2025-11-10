@@ -1,10 +1,10 @@
 import { ProductProvider } from '@/context/ProductEditContext';
-import { ProductEdit } from './ProductEdit';
+import { ProductEditPage } from './ProductEdit';
 
-export function ProductEditPage() {
+export function ProductEditPageWrapper() {
   return (
     <ProductProvider>
-      <ProductEdit />
+      <ProductEditPage />
     </ProductProvider>
   );
 }
