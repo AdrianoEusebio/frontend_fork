@@ -130,7 +130,7 @@ export const ProductCategories: React.FC = () => {
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-            <h2 className="text-base font-bold text-gray-900">Tabela de Categorias de Produto</h2>
+            <h2 className="text-base font-bold text-gray-900">Tabela de Tipos de Produto</h2>
             <Button
               variant="primary"
               icon={<Plus className="w-4 h-4" />}

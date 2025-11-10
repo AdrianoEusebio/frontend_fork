@@ -72,7 +72,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">
-        {initialData ? 'Edição de Categorias de Produto' : 'Cadastro de Categorias de Produto'}
+        {initialData ? 'Edição de Tipos de Produto' : 'Cadastro de Tipos de Produto'}
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">

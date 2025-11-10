@@ -45,9 +45,9 @@ export const ProductCategoryEdit: React.FC = () => {
       <div className="px-6 py-4">
         <div className="mb-6">
           <p className="text-sm text-gray-500 mb-2">
-            Páginas / Cadastros Básicos / Categorias de Produto
+            Páginas / Cadastros Básicos / Tipos de Produto
           </p>
-          <h1 className="text-2xl font-bold text-gray-800">Categorias de Produto</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Tipos de Produto</h1>
         </div>
 
         <ProductCategoryForm
