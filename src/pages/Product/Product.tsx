@@ -48,7 +48,7 @@ export const ProductCategories: React.FC = () => {
   };
 
   const handleEdit = (id: string) => {
-    navigate(`/product/edit/${id}`);
+    navigate(`/product/type/edit/${id}`);
   };
 
   const handleDelete = (id: string) => {
@@ -67,7 +67,7 @@ export const ProductCategories: React.FC = () => {
   };
 
   const handleCadastrar = () => {
-    navigate('/product/form');
+    navigate('/product/type/form');
   };
 
   const handleNavigate = (path: string) => {
@@ -79,9 +79,9 @@ export const ProductCategories: React.FC = () => {
       <Navbar onNavigate={handleNavigate} />
       <div className="w-full px-6 py-6">
         <div className="text-sm text-gray-600 mb-2">
-          Páginas / Cadastros Básicos / Categorias de Produto
+          Páginas / Cadastros Básicos / Tipos de Produto
         </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Categorias de Produto</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Tipos de Produto</h1>
 
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
