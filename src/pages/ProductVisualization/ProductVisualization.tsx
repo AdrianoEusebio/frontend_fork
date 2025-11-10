@@ -25,6 +25,18 @@ export const ProductVisualization = () => {
     navigate('/product/cadastration');
   };
 
+  const handleEditar = () => {
+    navigate('/product/edit');
+  };
+
+  const handleVisualizar = () => {
+    console.log('Visualizar Produto')
+  };
+
+  const handleDeletar = () => {
+    console.log('Deletar Produto')
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar onNavigate={handleNavigate} />
@@ -50,6 +62,9 @@ export const ProductVisualization = () => {
             onToggleSelect={toggleSelectProduct}
             onToggleSelectAll={toggleSelectAll}
             onCadastrar={handleCadastrar}
+            onEditar={handleEditar}
+            onVisualizar={handleVisualizar}
+            onDeletar={handleDeletar}
           />
         )}
       </div>

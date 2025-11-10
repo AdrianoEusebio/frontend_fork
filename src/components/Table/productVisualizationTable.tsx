@@ -8,6 +8,9 @@ interface ProductTableProps {
   onToggleSelect: (id: string) => void;
   onToggleSelectAll: () => void;
   onCadastrar: () => void;
+  onEditar: () => void;
+  onVisualizar: () => void;
+  onDeletar: () => void;
 }
 
 export const ProductTable = ({
@@ -16,6 +19,9 @@ export const ProductTable = ({
   onToggleSelect,
   onToggleSelectAll,
   onCadastrar,
+  onEditar,
+  onVisualizar,
+  onDeletar
 }: ProductTableProps) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200">
@@ -126,13 +132,13 @@ export const ProductTable = ({
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-1">
-                    <button className="p-2 bg-green-500 hover:bg-green-600 text-white rounded transition-colors">
+                    <button className="p-2 bg-green-500 hover:bg-green-600 text-white rounded transition-colors" onClick={onVisualizar}>
                       <Eye size={16} />
                     </button>
-                    <button className="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded transition-colors">
+                    <button className="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded transition-colors" onClick={onEditar}>
                       <Edit size={16} />
                     </button>
-                    <button className="p-2 bg-red-500 hover:bg-red-600 text-white rounded transition-colors">
+                    <button className="p-2 bg-red-500 hover:bg-red-600 text-white rounded transition-colors" onClick={onDeletar}>
                       <Trash2 size={16} />
                     </button>
                   </div>
