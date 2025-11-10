@@ -9,11 +9,11 @@ export const ProductCategoryCadastration: React.FC = () => {
   
   const handleSubmit = (data: ProductCategory) => {
     ProductCategoryService.createCategory(data);
-    navigate('/product');
+    navigate('/product/type');
   };
 
   const handleCancel = () => {
-    navigate('/product');
+    navigate('/product/type');
   };
 
   const handleNavigate = (path: string) => {

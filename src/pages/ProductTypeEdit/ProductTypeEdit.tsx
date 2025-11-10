@@ -15,7 +15,7 @@ export const ProductCategoryEdit: React.FC = () => {
       if (category) {
         setInitialData(category);
       } else {
-        navigate('/product');
+        navigate('/product/type');
       }
     }
   }, [id, navigate]);
@@ -23,12 +23,12 @@ export const ProductCategoryEdit: React.FC = () => {
   const handleSubmit = (data: ProductCategory) => {
     if (id) {
       ProductCategoryService.updateCategory(id, data);
-      navigate('/product');
+      navigate('/product/type');
     }
   };
 
   const handleCancel = () => {
-    navigate('/product');
+    navigate('/product/type');
   };
 
   const handleNavigate = (path: string) => {
