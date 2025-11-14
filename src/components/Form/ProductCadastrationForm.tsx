@@ -41,7 +41,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       estoqueMinimo: '',
       custoCliente: '',
       medida: '',
-      validadeDesconto: '',
       voltagem: '',
       isEletrico: false,
       observacao: ''
@@ -305,7 +304,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Input
               label="Medida"
               value={formData.medida}
@@ -319,13 +318,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               onChange={(value) => updateField('descricao', value)}
               placeholder="Informe uma descrição"
               type="number"
-            />
-
-            <Input
-              label="Validade do Desconto"
-              value={formData.validadeDesconto}
-              onChange={(value) => updateField('validadeDesconto', value)}
-              placeholder="Informe uma validade"
             />
 
             <Input

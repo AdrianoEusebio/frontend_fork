@@ -23,7 +23,6 @@ export interface Product {
   estoqueMinimo: string;
   custoCliente: string;
   medida: string;
-  validadeDesconto: string;
   voltagem: string;
   observacao: string;
   dataCadastro?: string;
@@ -77,7 +76,6 @@ const initialData: Product[] = [
     estoqueMinimo: '2',
     custoCliente: '28000.00',
     medida: 'N/A',
-    validadeDesconto: '2025-12-31',
     voltagem: '220V',
     observacao: 'Produto novo em estoque',
     dataCadastro: '2024-01-15',
@@ -239,6 +237,18 @@ export const ProductService = {
     if (filters.status) {
       products = products.filter(p => 
         p.status.toLowerCase().includes(filters.status!.toLowerCase())
+      );
+    }
+
+    if (filters.peso) {
+      products = products.filter(p => 
+        p.pesoItem.toLowerCase().includes(filters.peso!.toLowerCase())
+      );
+    }
+
+    if (filters.tipoProduto) {
+      products = products.filter(p => 
+        p.tipoProduto.toLowerCase().includes(filters.tipoProduto!.toLowerCase())
       );
     }
 

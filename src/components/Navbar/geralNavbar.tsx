@@ -57,17 +57,12 @@ const defaultCadastrosBasicos: MenuCategory[] = [
         label: 'Produtos',
         path: '/product/visualization',
       },
-    ],
-  },
-  {
-    label: 'Consultas',
-    items: [
       {
         label: 'Tipos de Produtos',
         path: '/product/type',
       },
     ],
-  }
+  },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({

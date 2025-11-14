@@ -39,7 +39,6 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
       estoqueMinimo: '',
       custoCliente: '',
       medida: '',
-      validadeDesconto: '',
       voltagem: '',
       isEletrico: true,
       observacao: '',
@@ -150,7 +149,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Input
             label="Descrição"
             required
@@ -225,7 +224,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Input
             label="Medida"
             placeholder="Informe o valor"
@@ -240,12 +239,6 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
             type="number"
           />
 
-          <Input
-            label="Validade do Desconto"
-            placeholder="Informe uma validade"
-            value={formData.validadeDesconto}
-            onChange={(e) => handleChange('validadeDesconto', e.target.value)}
-          />
           <Input
             label="Voltagem"
             placeholder="Informe um valor de voltagem"
