@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Input } from '@/components/Input/productEditInput';
 import { Select } from '@/components/Select/productEditSelect';
 import { Textarea } from '@/components/Textarea/productEditTextarea';
 import { Button } from '@/components/Button/productEditButton';
 import { Checkbox } from '@/components/Checkbox/productEditCheckbox';
-import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions } from '@/services/ProductService';
+import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions, familiaProduto } from '@/services/ProductService';
 
 interface ProductEditFormProps {
   initialData?: Product;
@@ -24,6 +24,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
       codigo: '',
       partnumber: '',
       marca: '',
+      familiaProdutos: '',
       descricao: '',
       unidade: '',
       peso: 0,
@@ -34,6 +35,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
       categoria: '',
       fornecedor: '',
       valorItem: '',
+      pesoItem: '',
       estoqueMinimo: '',
       custoCliente: '',
       medida: '',
@@ -53,6 +55,28 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
       setFormData(initialData);
     }
   }, [initialData]);
+
+  // Encontrar a tag do tipo de produto selecionado
+  const selectedTipoProduto = useMemo(() => {
+    return tipoProdutoOptions.find(option => option.value === formData.tipoProduto);
+  }, [formData.tipoProduto]);
+
+  // Filtrar marcas baseado na tag do tipo de produto
+  const filteredMarcaOptions = useMemo(() => {
+    if (!selectedTipoProduto) return [];
+    return marcaOptions.filter(option => option.Tag === selectedTipoProduto.Tag);
+  }, [selectedTipoProduto]);
+
+  // Filtrar categorias baseado na tag do tipo de produto
+  const filteredCategoriaOptions = useMemo(() => {
+    if (!selectedTipoProduto) return [];
+    return categoriaOptions.filter(option => option.Tag === selectedTipoProduto.Tag);
+  }, [selectedTipoProduto]);
+
+  const filteredFamiliaProdutosOptions = useMemo(() => {
+    if (!selectedTipoProduto) return [];
+    return familiaProduto.filter(option => option.Tag === selectedTipoProduto.Tag);
+  }, [selectedTipoProduto]);
 
   const handleChangeCheckbox = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -80,7 +104,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
     const submitData: Product = {
       ...formData,
       valorCusto: parseFloat(formData.valorItem) || 0,
-      peso: parseFloat(formData.medida) || 0
+      peso: parseFloat(formData.pesoItem) || 0
     };
     
     onSubmit(submitData);
@@ -120,7 +144,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
           <Select
             label="Marca"
             required
-            options={marcaOptions}
+            options={filteredMarcaOptions} 
             value={formData.marca}
             onChange={(e) => handleChange('marca', e.target.value)}
           />
@@ -137,9 +161,17 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
           <Select
             label="Categoria"
             required
-            options={categoriaOptions}
+            options={filteredCategoriaOptions} 
             value={formData.categoria}
             onChange={(e) => handleChange('categoria', e.target.value)}
+          />
+
+          <Select
+            label="Categoria"
+            required
+            options={filteredFamiliaProdutosOptions} 
+            value={formData.familiaProdutos}
+            onChange={(e) => handleChange('familiaProdutos', e.target.value)}
           />
         </div>
 
@@ -193,13 +225,21 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <Input
             label="Medida"
             placeholder="Informe o valor"
             value={formData.medida}
             onChange={(e) => handleChange('medida', e.target.value)}
           />
+
+          <Input
+            label="Peso"
+            value={formData.pesoItem}
+            onChange={(e) => handleChange('pesoItem', e.target.value)}
+            type="number"
+          />
+
           <Input
             label="Validade do Desconto"
             placeholder="Informe uma validade"
