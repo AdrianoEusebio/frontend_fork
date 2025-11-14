@@ -50,16 +50,16 @@ const defaultCadastrosBasicos: MenuCategory[] = [
     label: 'Cadastros Básicos',
     items: [
       {
+        label: 'Tipos de Produtos',
+        path: '/product/type',
+      },
+      {
         label: 'Categoria de Produto',
         path: '/product/categoria',
       },
       {
         label: 'Produtos',
         path: '/product/visualization',
-      },
-      {
-        label: 'Tipos de Produtos',
-        path: '/product/type',
       },
     ],
   },
