@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { TiposProdutoTable } from '@/components/Table/productTypeTable';
 import { useTiposProduto } from '@/hooks/useProductType';
-import { Navbar } from '@/components/Navbar/productTypeNavbar';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 import { useNavigate} from 'react-router-dom'
 
 export const TiposProduto: React.FC = () => {

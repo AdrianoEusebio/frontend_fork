@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Navbar } from '@/components/Navbar/productCategoriaCadastrationNavbar';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 import { ProductCategoryForm } from '@/components/Form/ProductCategoriaForm';
 import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
 

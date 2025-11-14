@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/Navbar/productVisualizationNavbar';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 import { ProductFilter } from '@/components/Filter/productVisualizationFilter';
 import { ProductTable } from '@/components/Table/productVisualizationTable';
 import { useProducts } from '@/hooks/useProducto';

@@ -4,7 +4,7 @@ import { Button } from '@/components/Button/productCategoriaButton';
 import { Input } from '@/components/Input/productCategoriaInput';
 import { Select } from '@/components/Select/productCategoriaSelect';
 import { Table } from '@/components/Table/productCategoriaTable';
-import { Navbar } from '@/components/Navbar/productCategoriaNavbar';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 import { ProductCategoryService, ProductCategory, equipmentTypes } from '@/services/ProductCategoryService';
 import { useNavigate } from 'react-router-dom'
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from '@/components/Navbar/productCategoriaEditNavbar';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 import { ProductCategoryForm } from '@/components/Form/ProductCategoriaForm';
 import { useNavigate, useParams } from 'react-router-dom'
 import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
