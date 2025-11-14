@@ -3,6 +3,7 @@ import { Input } from '@/components/Input/productEditInput';
 import { Select } from '@/components/Select/productEditSelect';
 import { Textarea } from '@/components/Textarea/productEditTextarea';
 import { Button } from '@/components/Button/productEditButton';
+import { Checkbox } from '@/components/Checkbox/productEditCheckbox';
 import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions } from '@/services/ProductService';
 
 interface ProductEditFormProps {
@@ -52,6 +53,18 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
       setFormData(initialData);
     }
   }, [initialData]);
+
+  const handleChangeCheckbox = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
 
   const handleChange = (field: keyof Product, value: string) => {
     setFormData(prev => ({
@@ -182,13 +195,6 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Input
-            label="Custo Cliente"
-            placeholder="Informe o valor"
-            value={formData.custoCliente}
-            onChange={(e) => handleChange('custoCliente', e.target.value)}
-            type="number"
-          />
-          <Input
             label="Medida"
             placeholder="Informe o valor"
             value={formData.medida}
@@ -205,6 +211,13 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
             placeholder="Informe um valor de voltagem"
             value={formData.voltagem}
             onChange={(e) => handleChange('voltagem', e.target.value)}
+          />
+
+          <Checkbox
+            label="É Equipamento Elétrico?"
+            name="isEletrico"
+            checked={formData.isEletrico}
+            onChange={handleChangeCheckbox}
           />
         </div>
 
