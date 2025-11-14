@@ -4,6 +4,7 @@ import { Input } from '@/components/Input/productCadastrationInput';
 import { Select } from '@/components/Select/productCadastratioSelect';
 import { TextArea } from '@/components/Textarea/productCadastrationTextarea';
 import { Button } from '@/components/Button/productCadastrationButton';
+import { Checkbox } from '@/components/Checkbox/productCadastrationCheckbox';
 import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions } from '@/services/ProductService';
 
 interface ProductFormProps {
@@ -40,6 +41,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       medida: '',
       validadeDesconto: '',
       voltagem: '',
+      isEletrico: false,
       observacao: ''
     }
   );
@@ -57,6 +59,18 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     
     onSubmit(submitData);
   };
+
+  const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+      const { name, value, type } = e.target;
+      const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    };
 
   const updateField = (field: keyof Product, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -272,8 +286,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               onChange={(value) => updateField('voltagem', value)}
               placeholder="Informe um valor de voltagem"
             />
-          </div>
 
+            <Checkbox
+              label="É Equipamento Elétrico?"
+              name="isEletrico"
+              checked={formData.isEletrico || false}
+              onChange={handleChange}
+            />
+
+          </div>
           <TextArea
             label="Observação"
             value={formData.observacao}

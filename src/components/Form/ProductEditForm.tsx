@@ -38,6 +38,7 @@ export const ProductEditForm: React.FC<ProductEditFormProps> = ({
       medida: '',
       validadeDesconto: '',
       voltagem: '',
+      isEletrico: true,
       observacao: '',
       dataCadastro: '',
       usuarioCadastro: '',

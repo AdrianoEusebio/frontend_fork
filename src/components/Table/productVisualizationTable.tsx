@@ -1,5 +1,5 @@
 import { Eye, Edit, Trash2, Plus, FileDown } from 'lucide-react';
-import { Product } from '@/services/ProductsVisualizationTypeMockData';
+import { Product } from '@/services/ProductService';
 import { Button } from '@/components/Button/productVisualizationButton';
 
 interface ProductTableProps {
@@ -82,6 +82,9 @@ export const ProductTable = ({
                 DESCRIÇÃO RESUMIDA
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                É ELETRICO
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 AÇÕES
               </th>
             </tr>
@@ -123,6 +126,9 @@ export const ProductTable = ({
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-900">
                   {product.descricaoResumida}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-900">
+                  {product.isEletrico ? 'Sim' : 'Não'}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-1">

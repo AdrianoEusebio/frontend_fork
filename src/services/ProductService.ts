@@ -9,6 +9,7 @@ export interface Product {
   unidade: string;
   peso: number;
   valorCusto: number;
+  isEletrico: boolean;
   descricaoResumida: string;
   
   // Campos para formulários
@@ -58,6 +59,7 @@ const initialData: Product[] = [
     unidade: 'UN',
     peso: 0.2,
     valorCusto: 2500.00,
+    isEletrico: false,
     descricaoResumida: 'Smartphone de última geração',
     tipoProduto: 'Eletrônico',
     pathNumber: 'PN-001',
@@ -84,7 +86,8 @@ const initialData: Product[] = [
     descricao: 'Smart TV 55" 4K',
     unidade: 'UN',
     peso: 15.5,
-    valorCusto: 3200.00,
+    valorCusto: 3500.00,
+    isEletrico: true,
     descricaoResumida: 'Smart TV LED 4K',
     tipoProduto: 'Eletrônico',
     pathNumber: 'PN-002',
