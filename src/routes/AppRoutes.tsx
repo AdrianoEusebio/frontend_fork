@@ -24,7 +24,7 @@ export default function AppRoutes() {
         element={<Navigate to={isAuthenticated ? "/product/visualization" : "/login"} />}
       />
       <Route
-        path="/product/type"
+        path="/product/categoria"
         element={isAuthenticated ? <ProductCategories /> : <Navigate to="/login" />}
       />
       <Route
@@ -32,11 +32,11 @@ export default function AppRoutes() {
         element={!isAuthenticated ? <Login /> : <Navigate to="/product" />}
       />
       <Route
-        path='/product/type/form'
+        path='/product/categoria/form'
         element={isAuthenticated ? <ProductCategoryCadastration /> : <Navigate to="/login" />}
       />
       <Route 
-        path="/product/type/edit/:id"
+        path="/product/categoria/edit/:id"
         element={isAuthenticated ? <ProductCategoryEdit /> : <Navigate to="/login" />}
       />
       <Route 

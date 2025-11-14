@@ -9,11 +9,11 @@ export const ProductCategoryCadastration: React.FC = () => {
   
   const handleSubmit = (data: ProductCategory) => {
     ProductCategoryService.createCategory(data);
-    navigate('/product/type');
+    navigate('/product/categoria');
   };
 
   const handleCancel = () => {
-    navigate('/product/type');
+    navigate('/product/categoria');
   };
 
   const handleNavigate = (path: string) => {
@@ -26,9 +26,9 @@ export const ProductCategoryCadastration: React.FC = () => {
       <div className="px-6 py-4">
         <div className="mb-6">
           <p className="text-sm text-gray-500 mb-2">
-            Páginas / Cadastros Básicos / Tipos de Produto
+            Páginas / Cadastros Básicos / Categoria de Produto
           </p>
-          <h1 className="text-2xl font-bold text-gray-800">Tipos de Produto</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Categoria de Produto</h1>
         </div>
 
         <ProductCategoryForm
