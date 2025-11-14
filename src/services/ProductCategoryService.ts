@@ -23,9 +23,11 @@ export interface ProductCategory {
 }
 
 export const equipmentTypes = [
-  { value: 'ELET', label: 'ELET - Eletrônicos' },
-  { value: 'MOVE', label: 'MOVE - Móveis' },
-  { value: 'INSTR', label: 'INSTR - Instrumentos' },
+  { value: 'Empilhadeira', label: 'Empilhadeira', Tag: 1, Cod: 'E'},
+  { value: 'Veiculo', label: 'Veiculo', Tag: 2, Cod: 'V'},
+  { value: 'Pre-Moldados', label: 'Pre-Moldados', Tag: 3, Cod: 'PM'},
+  { value: 'Peças', label: 'Peças', Tag: 4, Cod: 'P'},
+  { value: 'Locação', label: 'Locação', Tag: 5, Cod: 'L'},
 ];
 
 export const companies = [
@@ -49,17 +51,17 @@ export const revenueCenters = [
 const initialData: ProductCategory[] = [
   {
     id: '1',
-    codigo: 'ELET',
-    descricao: 'Eletrônicos',
-    desconto: '10',
-    valorDesconto: '100',
+    codigo: '1',
+    descricao: 'Empilhadeiras de Construção',
+    desconto: '5',
+    valorDesconto: '50',
     empresa: 'Empresa A',
     centroCusto: 'Custo A',
     centroReceb: 'Receb A',
     imprimirRelat: 'Sim',
     aplicarAuto: 'Sim',
-    equipmentType: 'ELET',
-    description: 'Eletrônicos',
+    equipmentType: 'Empilhadeira',
+    description: 'Empilhadeiras de Construção',
     company: 'Empresa A',
     costCenter: 'Custo A',
     revenueCenter: 'Receb A',
@@ -72,7 +74,7 @@ const initialData: ProductCategory[] = [
   },
   {
     id: '2',
-    codigo: 'MOVE',
+    codigo: '2',
     descricao: 'Móveis',
     desconto: '5',
     valorDesconto: '50',
@@ -81,7 +83,7 @@ const initialData: ProductCategory[] = [
     centroReceb: 'Receb B',
     imprimirRelat: 'Não',
     aplicarAuto: 'Sim',
-    equipmentType: 'MOVE',
+    equipmentType: 'Locação',
     description: 'Móveis',
     company: 'Empresa B',
     costCenter: 'Custo B',
@@ -96,6 +98,7 @@ const initialData: ProductCategory[] = [
 ];
 
 const STORAGE_KEY = 'productCategories';
+const CATEGORY_COUNTER_KEY = 'productCategoryCounter';
 
 export const ProductCategoryService = {
   getCategories(): ProductCategory[] {
@@ -107,19 +110,55 @@ export const ProductCategoryService = {
     }
     
     localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+    this.initializeCounter();
     return initialData;
+  },
+
+  getCategoryCounter(): number {
+    if (typeof window === 'undefined') return initialData.length;
+    
+    const stored = localStorage.getItem(CATEGORY_COUNTER_KEY);
+    if (stored) {
+      return parseInt(stored, 10);
+    }
+
+    return this.initializeCounter();
+  },
+
+  initializeCounter(): number {
+    const categories = this.getCategories();
+    const maxId = categories.length > 0 
+      ? Math.max(...categories.map(cat => parseInt(cat.id))) 
+      : 0;
+    
+    const counter = maxId;
+    localStorage.setItem(CATEGORY_COUNTER_KEY, counter.toString());
+    return counter;
+  },
+
+  saveCategoryCounter(counter: number): void {
+    localStorage.setItem(CATEGORY_COUNTER_KEY, counter.toString());
   },
 
   saveCategories(categories: ProductCategory[]): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(categories));
   },
 
-  createCategory(category: Omit<ProductCategory, 'id'>): ProductCategory {
+  createCategory(category: Omit<ProductCategory, 'id' | 'codigo'>): ProductCategory {
     const categories = this.getCategories();
-    const newId = categories.length > 0 ? (Math.max(...categories.map(c => parseInt(c.id))) + 1).toString() : '1';
-    const newCategory = { 
+    
+    // Obtém e incrementa o contador
+    const currentCounter = this.getCategoryCounter();
+    const newCounter = currentCounter + 1;
+    this.saveCategoryCounter(newCounter);
+    
+    // Usa o contador como ID e código
+    const newId = newCounter.toString();
+    
+    const newCategory: ProductCategory = { 
       ...category, 
       id: newId,
+      codigo: newId, // Código igual ao ID
       registrationDate: new Date().toISOString().split('T')[0],
       registeredBy: 'Usuário Atual',
       modificationDate: new Date().toISOString().split('T')[0],

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/Input/productCategoriaCadastrationInput';
 import { Select } from '@/components/Select/ProductCategoriaCadastrationSelect';
 import { Textarea } from '@/components/Textarea/ProductCategoriaCadastrationTextarea';
 import { Checkbox } from '@/components/Checkbox/productCategoriaCadastrationCheckbox';
 import { Button } from '@/components/Button/productCategoriaCadastrationButton';
-import { ProductCategory, equipmentTypes, companies, costCenters, revenueCenters } from '@/services/ProductCategoryService';
+import { ProductCategory, equipmentTypes, companies, costCenters, revenueCenters, ProductCategoryService } from '@/services/ProductCategoryService';
 
 interface ProductCategoryFormProps {
   initialData?: ProductCategory;
@@ -17,6 +17,16 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
   onSubmit,
   onCancel
 }) => {
+  const [nextId, setNextId] = useState<string>('');
+
+  useEffect(() => {
+    if (!initialData) {
+      // Calcula o próximo ID apenas para novas categorias
+      const currentCounter = ProductCategoryService.getCategoryCounter();
+      setNextId((currentCounter + 1).toString());
+    }
+  }, [initialData]);
+
   const [formData, setFormData] = useState<ProductCategory>(
     initialData || {
       id: '',
@@ -39,6 +49,17 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
     }
   );
 
+  // Atualiza o ID e código quando nextId muda (apenas para novas categorias)
+  useEffect(() => {
+    if (!initialData && nextId) {
+      setFormData(prev => ({
+        ...prev,
+        id: nextId,
+        codigo: nextId
+      }));
+    }
+  }, [nextId, initialData]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -57,7 +78,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
     // Garantir que os campos principais estejam preenchidos
     const submitData: ProductCategory = {
       ...formData,
-      codigo: formData.codigo || formData.equipmentType || '',
+      codigo: formData.codigo || formData.id, // Garante que código seja igual ao ID
       descricao: formData.descricao || formData.description || '',
       empresa: formData.empresa || formData.company || '',
       centroCusto: formData.centroCusto || formData.costCenter || '',
@@ -79,14 +100,23 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
           name="id"
           value={formData.id}
           onChange={handleChange}
-          placeholder="Informe um ID"
           required
-          disabled={!!initialData}
+          disabled={true}
           className={initialData ? 'bg-gray-50' : ''}
         />
 
+        <Input
+          label="Código"
+          name="codigo"
+          value={formData.codigo}
+          onChange={handleChange}
+          required
+          disabled={true}
+          className="bg-gray-50"
+        />
+
         <Select
-          label="Tipo de Equipamento"
+          label="Tipo de Produto"
           name="equipmentType"
           value={formData.equipmentType || ''}
           onChange={handleChange}
@@ -94,8 +124,10 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
           placeholder="Digite ou selecione uma das opções"
           required
         />
+      </div>
 
-        <div className="md:col-span-1">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="md:col-span-3">
           <Textarea
             label="Descrição"
             name="description"

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Filter, Trash2 } from 'lucide-react';
 import { Input } from '@/components/Input/productVisualizationInput';
 import { Button } from '@/components/Button/productVisualizationButton';
-import { ProductFilters } from '@/services/ProductsVisualizationTypeMockData';
+import { ProductFilters } from '@/services/ProductVisualizationFilterMockData';
 
 interface ProductFilterProps {
   onFilter: (filters: ProductFilters) => void;

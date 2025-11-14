@@ -5,7 +5,7 @@ import { Input } from '@/components/Input/productCategoriaInput';
 import { Select } from '@/components/Select/productCategoriaSelect';
 import { Table } from '@/components/Table/productCategoriaTable';
 import { Navbar } from '@/components/Navbar/productCategoriaNavbar';
-import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
+import { ProductCategoryService, ProductCategory, equipmentTypes } from '@/services/ProductCategoryService';
 import { useNavigate } from 'react-router-dom'
 
 export const ProductCategories: React.FC = () => {
@@ -34,6 +34,7 @@ export const ProductCategories: React.FC = () => {
 
     if (tipo) {
       filtered = filtered.filter((cat) =>
+        cat.equipmentType?.toLowerCase().includes(tipo.toLowerCase()) ||
         cat.codigo.toLowerCase().includes(tipo.toLowerCase())
       );
     }
@@ -74,6 +75,12 @@ export const ProductCategories: React.FC = () => {
     navigate(path);
   };
 
+  // Converter equipmentTypes para o formato de opções do Select
+  const tipoOptions = equipmentTypes.map(type => ({
+    value: type.value,
+    label: type.label
+  }));
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar onNavigate={handleNavigate} />
@@ -113,6 +120,7 @@ export const ProductCategories: React.FC = () => {
                 placeholder="Digite ou selecione uma das opções"
                 value={tipo}
                 onChange={setTipo}
+                options={tipoOptions} // Usando as opções convertidas
                 className="!py-2.5 !rounded-lg !border-gray-300 !text-sm focus:!border-blue-500"
               />
             </div>

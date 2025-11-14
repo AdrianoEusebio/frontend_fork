@@ -22,6 +22,9 @@ export const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onDownload
               Descrição
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              Tipo de Produto
+            </th>
+            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
               Desconto (%)
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
@@ -46,6 +49,7 @@ export const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onDownload
             <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
               <td className="px-4 py-3 text-sm text-gray-900">{item.codigo}</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.descricao}</td>
+              <td className="px-4 py-3 text-sm text-gray-900">{item.equipmentType}</td>
               <td className="px-4 py-3 text-sm text-gray-900">5</td>
               <td className="px-4 py-3 text-sm text-gray-900">50</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.empresa}</td>
