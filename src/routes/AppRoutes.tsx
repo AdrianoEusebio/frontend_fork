@@ -1,12 +1,13 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { Login } from '../pages/Login/Login'
 import { useAuth } from '@/context/AuthContext'
-import { ProductCategories } from '../pages/Product/Product'
-import { ProductCategoryCadastration } from '../pages/ProductTypeCadastration/ProductTypeCadastration'
-import { ProductCategoryEdit } from '../pages/ProductTypeEdit/ProductTypeEdit'
+import { ProductCategories } from '../pages/ProductCategoria/ProductCategoria'
+import { ProductCategoryCadastration } from '../pages/ProductCategoriaCadastration/ProductCategoriaCadastration'
+import { ProductCategoryEdit } from '../pages/ProductCategoriaEdit/ProductCategoriaEdit'
 import { ProductsPage } from '../pages/ProductVisualization/ProductVisualization'
 import { ProductCadastration } from '../pages/ProductCadastration/ProductCadastration'
 import { ProductEditPageWrapper } from '../pages/ProductEdit/ProductEditPage'
+import { TiposProduto } from '../pages/ProductType/ProductType'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -50,6 +51,10 @@ export default function AppRoutes() {
       <Route 
         path="/product/edit/:id"
         element={isAuthenticated ? <ProductEditPageWrapper /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/product/type"
+        element={isAuthenticated ? <TiposProduto /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

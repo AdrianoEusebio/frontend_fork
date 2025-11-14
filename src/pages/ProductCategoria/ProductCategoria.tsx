@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Filter, Plus } from 'lucide-react';
-import { Button } from '@/components/Button/productButton';
-import { Input } from '@/components/Input/productInput';
-import { Select } from '@/components/Select/productSelect';
-import { Table } from '@/components/Table/productTable';
-import { Navbar } from '@/components/Navbar/productNavbar';
+import { Button } from '@/components/Button/productCategoriaButton';
+import { Input } from '@/components/Input/productCategoriaInput';
+import { Select } from '@/components/Select/productCategoriaSelect';
+import { Table } from '@/components/Table/productCategoriaTable';
+import { Navbar } from '@/components/Navbar/productCategoriaNavbar';
 import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
 import { useNavigate } from 'react-router-dom'
 

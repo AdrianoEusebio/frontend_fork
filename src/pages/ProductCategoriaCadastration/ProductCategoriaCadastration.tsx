@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Navbar } from '@/components/Navbar/productTypeCadastrationNavbar';
-import { ProductCategoryForm } from '@/components/Form/ProductTypeForm';
+import { Navbar } from '@/components/Navbar/productCategoriaCadastrationNavbar';
+import { ProductCategoryForm } from '@/components/Form/ProductCategoriaForm';
 import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
 
 export const ProductCategoryCadastration: React.FC = () => {

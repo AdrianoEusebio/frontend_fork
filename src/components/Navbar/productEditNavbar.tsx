@@ -58,23 +58,19 @@ const defaultCadastrosBasicos: MenuCategory[] = [
         path: '/product/visualization',
       },
     ],
-  },
+  }
+];
+
+const defaultConfiguracoes: MenuCategory[] = [
   {
-    label: 'Empresas',
-    items: [],
-  },
-  {
-    label: 'Institucional',
-    items: [],
-  },
-  {
-    label: 'Clientes',
-    items: [],
-  },
-  {
-    label: 'Outros',
-    items: [],
-  },
+    label: 'Configurações',
+    items: [
+      {
+        label: 'Tipos de Produtos',
+        path: '/product/type',
+      },
+    ],
+  }
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -202,14 +198,51 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ChevronDown className="w-4 h-4" />
             </button>
 
-            <button
-              onClick={() => handleMenuClick('configuracoes')}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 px-3 py-1.5 rounded-md"
-            >
-              <Settings className="w-4 h-4" />
-              <span className="text-sm">Configurações</span>
-              <ChevronDown className="w-4 h-4" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => handleMenuClick('configuracoes')}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
+                  activeMenu === 'configuracoes'
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-gray-800'
+                }`}
+              >
+                <Settings className="w-4 h-4" />
+                <span className="text-sm font-medium">Configurações</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${activeMenu === 'configuracoes' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {activeMenu === 'configuracoes' && (
+                <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[200px] z-50">
+                  {defaultConfiguracoes.map((category, idx) => (
+                    <div key={idx} className="relative">
+                      <button
+                        onMouseEnter={() => handleSubMenuHover(category.label)}
+                        onClick={() => category.items.length === 0 && handleSubMenuHover(category.label)}
+                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center justify-between"
+                      >
+                        {category.label}
+                        {category.items.length > 0 && <ChevronRight className="w-4 h-4" />}
+                      </button>
+
+                      {activeSubMenu === category.label && category.items.length > 0 && (
+                        <div className="absolute left-full top-0 ml-1 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[220px]">
+                          {category.items.map((item, itemIdx) => (
+                            <button
+                              key={itemIdx}
+                              onClick={() => item.path && handleItemClick(item.path)}
+                              className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Input } from '@/components/Input/productTypeCadastrationInput';
-import { Select } from '@/components/Select/ProductTypeCadastrationSelect';
-import { Textarea } from '@/components/Textarea/ProductTypeCadastrationTextarea';
-import { Checkbox } from '@/components/Checkbox/productTypeCadastrationCheckbox';
-import { Button } from '@/components/Button/productTypeCadastrationButton';
+import { Input } from '@/components/Input/productCategoriaCadastrationInput';
+import { Select } from '@/components/Select/ProductCategoriaCadastrationSelect';
+import { Textarea } from '@/components/Textarea/ProductCategoriaCadastrationTextarea';
+import { Checkbox } from '@/components/Checkbox/productCategoriaCadastrationCheckbox';
+import { Button } from '@/components/Button/productCategoriaCadastrationButton';
 import { ProductCategory, equipmentTypes, companies, costCenters, revenueCenters } from '@/services/ProductCategoryService';
 
 interface ProductCategoryFormProps {
@@ -62,8 +62,6 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
       empresa: formData.empresa || formData.company || '',
       centroCusto: formData.centroCusto || formData.costCenter || '',
       centroReceb: formData.centroReceb || formData.revenueCenter || '',
-      imprimirRelat: formData.printEquipmentReport ? 'Sim' : 'Não',
-      aplicarAuto: formData.generateSerialNumber ? 'Sim' : 'Não'
     };
     
     onSubmit(submitData);
