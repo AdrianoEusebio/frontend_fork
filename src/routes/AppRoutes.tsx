@@ -1,12 +1,13 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { Login } from '../pages/Login/Login'
 import { useAuth } from '@/context/AuthContext'
-import { ProductCategories } from '../pages/Product/Product'
-import { ProductCategoryCadastration } from '../pages/ProductTypeCadastration/ProductTypeCadastration'
-import { ProductCategoryEdit } from '../pages/ProductTypeEdit/ProductTypeEdit'
+import { ProductCategories } from '../pages/ProductCategoria/ProductCategoria'
+import { ProductCategoryCadastration } from '../pages/ProductCategoriaCadastration/ProductCategoriaCadastration'
+import { ProductCategoryEdit } from '../pages/ProductCategoriaEdit/ProductCategoriaEdit'
 import { ProductsPage } from '../pages/ProductVisualization/ProductVisualization'
 import { ProductCadastration } from '../pages/ProductCadastration/ProductCadastration'
 import { ProductEditPageWrapper } from '../pages/ProductEdit/ProductEditPage'
+import { TiposProduto } from '../pages/ProductType/ProductType'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -24,7 +25,7 @@ export default function AppRoutes() {
         element={<Navigate to={isAuthenticated ? "/product/visualization" : "/login"} />}
       />
       <Route
-        path="/product/type"
+        path="/product/categoria"
         element={isAuthenticated ? <ProductCategories /> : <Navigate to="/login" />}
       />
       <Route
@@ -32,11 +33,11 @@ export default function AppRoutes() {
         element={!isAuthenticated ? <Login /> : <Navigate to="/product" />}
       />
       <Route
-        path='/product/type/form'
+        path='/product/categoria/form'
         element={isAuthenticated ? <ProductCategoryCadastration /> : <Navigate to="/login" />}
       />
       <Route 
-        path="/product/type/edit/:id"
+        path="/product/categoria/edit/:id"
         element={isAuthenticated ? <ProductCategoryEdit /> : <Navigate to="/login" />}
       />
       <Route 
@@ -50,6 +51,10 @@ export default function AppRoutes() {
       <Route 
         path="/product/edit/:id"
         element={isAuthenticated ? <ProductEditPageWrapper /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/product/type"
+        element={isAuthenticated ? <TiposProduto /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -1,5 +1,5 @@
 import { Eye, Edit, Trash2, Plus, FileDown } from 'lucide-react';
-import { Product } from '@/services/ProductsVisualizationTypeMockData';
+import { Product } from '@/services/ProductService';
 import { Button } from '@/components/Button/productVisualizationButton';
 
 interface ProductTableProps {
@@ -27,7 +27,7 @@ export const ProductTable = ({
     <div className="bg-white rounded-lg border border-gray-200">
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-800">
-          Tabela de Tipos de Produto
+          Tabela de Produto
         </h3>
         <div className="flex gap-2">
           <Button variant="primary">
@@ -58,9 +58,6 @@ export const ProductTable = ({
                 />
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                STATUS
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 CÓDIGO
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -85,6 +82,9 @@ export const ProductTable = ({
                 DESCRIÇÃO RESUMIDA
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                É ELETRICO
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 AÇÕES
               </th>
             </tr>
@@ -102,9 +102,6 @@ export const ProductTable = ({
                     onChange={() => onToggleSelect(product.id)}
                     className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                   />
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-900 font-medium">
-                  {product.status}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-900">
                   {product.codigo}
@@ -129,6 +126,9 @@ export const ProductTable = ({
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-900">
                   {product.descricaoResumida}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-900">
+                  {product.isEletrico ? 'Sim' : 'Não'}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-1">

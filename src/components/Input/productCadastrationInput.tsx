@@ -8,6 +8,7 @@ interface InputProps {
   required?: boolean;
   type?: 'text' | 'number';
   className?: string;
+  disabled?: boolean; // Nova prop para desabilitar o campo
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -17,7 +18,8 @@ export const Input: React.FC<InputProps> = ({
   placeholder,
   required = false,
   type = 'text',
-  className = ''
+  className = '',
+  disabled = false // Valor padrão é false
 }) => {
   return (
     <div className={`flex flex-col ${className}`}>
@@ -31,7 +33,10 @@ export const Input: React.FC<InputProps> = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        disabled={disabled} // Aplicando a prop disabled
+        className={`px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+          disabled ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''
+        }`}
       />
     </div>
   );

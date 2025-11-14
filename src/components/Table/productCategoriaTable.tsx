@@ -16,16 +16,13 @@ export const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onDownload
         <thead>
           <tr className="border-b border-gray-200">
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Imprimir Relat. de Equip.
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Aplicar Automático
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
               Código
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
               Descrição
+            </th>
+            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              Tipo de Produto
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
               Desconto (%)
@@ -50,12 +47,11 @@ export const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onDownload
         <tbody>
           {data.map((item) => (
             <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
-              <td className="px-4 py-3 text-sm text-gray-900">{item.imprimirRelat}</td>
-              <td className="px-4 py-3 text-sm text-gray-900">{item.aplicarAuto}</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.codigo}</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.descricao}</td>
-              <td className="px-4 py-3 text-sm text-gray-900">{item.desconto}</td>
-              <td className="px-4 py-3 text-sm text-gray-900">{item.valorDesconto}</td>
+              <td className="px-4 py-3 text-sm text-gray-900">{item.equipmentType}</td>
+              <td className="px-4 py-3 text-sm text-gray-900">5</td>
+              <td className="px-4 py-3 text-sm text-gray-900">50</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.empresa}</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.centroCusto}</td>
               <td className="px-4 py-3 text-sm text-gray-900">{item.centroReceb}</td>

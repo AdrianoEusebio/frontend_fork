@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Input } from '@/components/Input/productTypeCadastrationInput';
-import { Select } from '@/components/Select/ProductTypeCadastrationSelect';
-import { Textarea } from '@/components/Textarea/ProductTypeCadastrationTextarea';
-import { Checkbox } from '@/components/Checkbox/productTypeCadastrationCheckbox';
-import { Button } from '@/components/Button/productTypeCadastrationButton';
+import { Input } from '@/components/Input/productCategoriaCadastrationInput';
+import { Select } from '@/components/Select/ProductCategoriaCadastrationSelect';
+import { Textarea } from '@/components/Textarea/ProductCategoriaCadastrationTextarea';
+import { Checkbox } from '@/components/Checkbox/productCategoriaCadastrationCheckbox';
+import { Button } from '@/components/Button/productCategoriaCadastrationButton';
 import { ProductCategory, equipmentTypes, companies, costCenters, revenueCenters } from '@/services/ProductCategoryService';
 
 interface ProductCategoryFormProps {
@@ -62,6 +62,8 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
       empresa: formData.empresa || formData.company || '',
       centroCusto: formData.centroCusto || formData.costCenter || '',
       centroReceb: formData.centroReceb || formData.revenueCenter || '',
+      imprimirRelat: formData.printEquipmentReport ? 'Sim' : 'Não',
+      aplicarAuto: formData.generateSerialNumber ? 'Sim' : 'Não'
     };
     
     onSubmit(submitData);
@@ -70,7 +72,7 @@ export const ProductCategoryForm: React.FC<ProductCategoryFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">
-        {initialData ? 'Edição de Tipos de Produto' : 'Cadastro de Tipos de Produto'}
+        {initialData ? 'Edição de Categoria de Produto' : 'Cadastro de Categoria de Produto'}
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">

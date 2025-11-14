@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from '@/components/Navbar/productCadastrationNavbar';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 import { ProductForm } from '@/components/Form/ProductCadastrationForm';
 import { useNavigate } from 'react-router-dom'
 import { ProductService, Product } from '@/services/ProductService';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from '@/components/Navbar/productTypeEditNavbar';
-import { ProductCategoryForm } from '@/components/Form/ProductTypeForm';
+import { Navbar } from '@/components/Navbar/geralNavbar';
+import { ProductCategoryForm } from '@/components/Form/ProductCategoriaForm';
 import { useNavigate, useParams } from 'react-router-dom'
 import { ProductCategoryService, ProductCategory } from '@/services/ProductCategoryService';
 
@@ -15,7 +15,7 @@ export const ProductCategoryEdit: React.FC = () => {
       if (category) {
         setInitialData(category);
       } else {
-        navigate('/product/type');
+        navigate('/product/categoria');
       }
     }
   }, [id, navigate]);
@@ -23,12 +23,12 @@ export const ProductCategoryEdit: React.FC = () => {
   const handleSubmit = (data: ProductCategory) => {
     if (id) {
       ProductCategoryService.updateCategory(id, data);
-      navigate('/product/type');
+      navigate('/product/categoria');
     }
   };
 
   const handleCancel = () => {
-    navigate('/product/type');
+    navigate('/product/categoria');
   };
 
   const handleNavigate = (path: string) => {
@@ -45,9 +45,9 @@ export const ProductCategoryEdit: React.FC = () => {
       <div className="px-6 py-4">
         <div className="mb-6">
           <p className="text-sm text-gray-500 mb-2">
-            Páginas / Cadastros Básicos / Tipos de Produto
+            Páginas / Cadastros Básicos / Categoria de Produto
           </p>
-          <h1 className="text-2xl font-bold text-gray-800">Tipos de Produto</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Categoria de Produto</h1>
         </div>
 
         <ProductCategoryForm

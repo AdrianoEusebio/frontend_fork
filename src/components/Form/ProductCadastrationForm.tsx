@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FileText, Receipt } from 'lucide-react';
 import { Input } from '@/components/Input/productCadastrationInput';
 import { Select } from '@/components/Select/productCadastratioSelect';
 import { TextArea } from '@/components/Textarea/productCadastrationTextarea';
 import { Button } from '@/components/Button/productCadastrationButton';
-import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions } from '@/services/ProductService';
+import { Checkbox } from '@/components/Checkbox/productCadastrationCheckbox';
+import { Product, tipoProdutoOptions, marcaOptions, categoriaOptions, fornecedorOptions, unidadeOptions , familiaProduto } from '@/services/ProductService';
 
 interface ProductFormProps {
   initialData?: Product;
@@ -25,6 +26,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       codigo: '',
       partnumber: '',
       marca: '',
+      familiaProdutos: '',
       descricao: '',
       unidade: '',
       peso: 0,
@@ -35,14 +37,45 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       categoria: '',
       fornecedor: '',
       valorItem: '',
+      pesoItem: '',
       estoqueMinimo: '',
       custoCliente: '',
       medida: '',
-      validadeDesconto: '',
       voltagem: '',
+      isEletrico: false,
       observacao: ''
     }
   );
+
+  // Encontrar a tag do tipo de produto selecionado
+  const selectedTipoProduto = useMemo(() => {
+    return tipoProdutoOptions.find(option => option.value === formData.tipoProduto);
+  }, [formData.tipoProduto]);
+
+  // Filtrar marcas baseado na tag do tipo de produto
+  const filteredMarcaOptions = useMemo(() => {
+    if (!selectedTipoProduto) return [];
+    return marcaOptions.filter(option => option.Tag === selectedTipoProduto.Tag);
+  }, [selectedTipoProduto]);
+
+  // Filtrar categorias baseado na tag do tipo de produto
+  const filteredCategoriaOptions = useMemo(() => {
+    if (!selectedTipoProduto) return [];
+    return categoriaOptions.filter(option => option.Tag === selectedTipoProduto.Tag);
+  }, [selectedTipoProduto]);
+
+  const filteredFamiliaProdutosOptions = useMemo(() => {
+    if (!selectedTipoProduto) return [];
+    return familiaProduto.filter(option => option.Tag === selectedTipoProduto.Tag);
+  }, [selectedTipoProduto]);
+
+  const generatedCode = useMemo(() => {
+    if (!formData.tipoProduto) return '';
+    const tipoProdutoOption = tipoProdutoOptions.find(option => option.value === formData.tipoProduto);
+    if (!tipoProdutoOption) return '';
+  
+    return `${tipoProdutoOption.Cod}?`;
+  }, [formData.tipoProduto]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,11 +85,23 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       ...formData,
       partnumber: formData.partnumber || formData.pathNumber || '',
       valorCusto: parseFloat(formData.valorItem) || 0,
-      peso: parseFloat(formData.medida) || 0
+      peso: parseFloat(formData.pesoItem) || 0,
     };
     
     onSubmit(submitData);
   };
+
+  const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+      const { name, value, type } = e.target;
+      const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    };
 
   const updateField = (field: keyof Product, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -150,10 +195,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
             <Input
               label="Código"
-              value={formData.codigo}
+              value={formData.tipoProduto ? generatedCode : ''}
               onChange={(value) => updateField('codigo', value)}
-              placeholder="Informe um código"
-              required
+              placeholder="Será gerado automaticamente"
+              disabled={true}
             />
 
             <Input
@@ -161,20 +206,19 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               value={formData.pathNumber}
               onChange={(value) => updateField('pathNumber', value)}
               placeholder="Informe um Path Number"
-              required
             />
 
             <Select
               label="Marca"
               value={formData.marca}
               onChange={(value) => updateField('marca', value)}
-              options={marcaOptions}
+              options={filteredMarcaOptions}
               placeholder="Digite ou selecione uma das opções"
               required
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Input
               label="Descrição"
               value={formData.descricao}
@@ -187,7 +231,16 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               label="Categoria"
               value={formData.categoria}
               onChange={(value) => updateField('categoria', value)}
-              options={categoriaOptions}
+              options={filteredCategoriaOptions}
+              placeholder="Selecione uma das opções"
+              required
+            />
+
+            <Select
+              label="Família de Produtos"
+              value={formData.familiaProdutos}
+              onChange={(value) => updateField('familiaProdutos', value)}
+              options={filteredFamiliaProdutosOptions}
               placeholder="Selecione uma das opções"
               required
             />
@@ -260,10 +313,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
 
             <Input
-              label="Validade do Desconto"
-              value={formData.validadeDesconto}
-              onChange={(value) => updateField('validadeDesconto', value)}
-              placeholder="Informe uma validade"
+              label="Peso"
+              value={formData.pesoItem}
+              onChange={(value) => updateField('descricao', value)}
+              placeholder="Informe uma descrição"
+              type="number"
             />
 
             <Input
@@ -272,8 +326,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               onChange={(value) => updateField('voltagem', value)}
               placeholder="Informe um valor de voltagem"
             />
-          </div>
 
+            <Checkbox
+              label="É Equipamento Elétrico?"
+              name="isEletrico"
+              checked={formData.isEletrico || false}
+              onChange={handleChange}
+            />
+
+          </div>
           <TextArea
             label="Observação"
             value={formData.observacao}
