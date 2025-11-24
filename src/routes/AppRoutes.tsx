@@ -8,6 +8,7 @@ import { ProductsPage } from '../pages/ProductVisualization/ProductVisualization
 import { ProductCadastration } from '../pages/ProductCadastration/ProductCadastration'
 import { ProductEditPageWrapper } from '../pages/ProductEdit/ProductEditPage'
 import { TiposProduto } from '../pages/ProductType/ProductType'
+import { SerialPage } from '../pages/SerialListagem/SerialListagem'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -55,6 +56,10 @@ export default function AppRoutes() {
       <Route 
         path="/product/type"
         element={isAuthenticated ? <TiposProduto /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/serial/list"
+        element={isAuthenticated ? <SerialPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
