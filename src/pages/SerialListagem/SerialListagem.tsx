@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Filter, Eraser, Plus, Info, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/Button/SerialListagemButton';
 import { Input } from '@/components/Input/SerialListagemInput';
 import { useSerialData } from '@/hooks/useSerial';
 import { Navbar } from '@/components/Navbar/geralNavbar'
 import { useNavigate } from 'react-router-dom'
+import { Product } from '@/services/ProductService';
 
 export const SerialPage: React.FC = () => {
-  const { data, filters, updateFilter, clearFilters } = useSerialData();
+  const { data, filters, updateFilter, clearFilters, deleteSerial, getProducts } = useSerialData();
   
   const navigate = useNavigate();
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const productsData = getProducts();
+    setProducts(productsData);
+  }, [getProducts]);
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -19,8 +26,14 @@ export const SerialPage: React.FC = () => {
     navigate('/serial/cadastration');
   };
 
-  const handleEditar = () => {
-    navigate('/serial/edit');
+  const handleEditar = (id: string) => {
+    navigate(`/serial/edit/${id}`);
+  };
+
+  const handleExcluir = (id: string) => {
+    if (window.confirm('Tem certeza que deseja excluir este serial?')) {
+      deleteSerial(id);
+    }
   };
 
   return (
@@ -73,9 +86,11 @@ export const SerialPage: React.FC = () => {
                         onChange={(e) => updateFilter('equipamento', e.target.value)}
                     >
                         <option value="">Digite ou selecione uma opção</option>
-                        <option value="produto 1">Produto 1</option>
-                        <option value="produto 2">Produto 2</option>
-                        <option value="produto 3">Produto 3</option>
+                        {products.map((product) => (
+                          <option key={product.id} value={product.descricao}>
+                            {product.descricao}
+                          </option>
+                        ))}
                     </select>
                     </div>
                     <Input
@@ -188,15 +203,21 @@ export const SerialPage: React.FC = () => {
                             {item.status}
                             </td>
                             <td className="py-3 px-4">
-                            <div className="flex items-center justify-end gap-2">
+                                <div className="flex items-center justify-end gap-2">
                                 <button className="p-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white transition-colors">
-                                <Info size={16} />
+                                    <Info size={16} />
                                 </button>
-                                <button className="p-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-colors" onClick={handleEditar}>
-                                <Edit size={16} />
+                                <button 
+                                    className="p-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-colors" 
+                                    onClick={() => handleEditar(item.id)}
+                                >
+                                    <Edit size={16} />
                                 </button>
-                                <button className="p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors">
-                                <Trash2 size={16} />
+                                <button 
+                                    className="p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors"
+                                    onClick={() => handleExcluir(item.id)}
+                                >
+                                    <Trash2 size={16} />
                                 </button>
                             </div>
                             </td>

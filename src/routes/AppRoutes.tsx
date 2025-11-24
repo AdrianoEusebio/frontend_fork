@@ -68,7 +68,7 @@ export default function AppRoutes() {
         element={isAuthenticated ? <SerialFormPage /> : <Navigate to="/login" />}
       />
       <Route 
-        path="/serial/edit"
+        path="/serial/edit/:id"
         element={isAuthenticated ? <SerialEditPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
