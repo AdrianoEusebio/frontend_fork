@@ -61,6 +61,10 @@ const defaultCadastrosBasicos: MenuCategory[] = [
         label: 'Produtos',
         path: '/product/visualization',
       },
+      {
+        label: 'Serial',
+        path: '/serial/list'
+      }
     ],
   },
 ];
