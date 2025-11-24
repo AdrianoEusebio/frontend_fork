@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar/geralNavbar'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSerialData } from '@/hooks/useSerial';
 import { Product } from '@/services/ProductService';
+import { Serial } from '@/services/SerialService';
 
 export const SerialEditPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,16 +19,10 @@ export const SerialEditPage: React.FC = () => {
   });
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [metadataFields, setMetadataFields] = useState({
-    dataCadastro: '',
-    usuarioCadastro: '',
-    dataAlteracao: '',
-    usuarioAlterou: '',
-  });
-
+  const [serial, setSerial] = useState<Serial | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const { updateSerial, getSerial, getProducts, loadData } = useSerialData();
+  const { updateSerial, getSerial, getProducts } = useSerialData();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,21 +30,16 @@ export const SerialEditPage: React.FC = () => {
     setProducts(productsData);
 
     if (id) {
-      const serial = getSerial(id);
-      if (serial) {
+      const serialData = getSerial(id);
+      if (serialData) {
+        setSerial(serialData);
         setFormData({
-          produtoId: serial.produtoId,
-          serial: serial.serial,
-          serialFabricante: serial.serialFabricante,
-          dataGarantia: serial.dataGarantia,
-          valorCusto: serial.valorCusto.toString(),
-          status: serial.status
-        });
-        setMetadataFields({
-          dataCadastro: serial.dataCadastro,
-          usuarioCadastro: serial.usuarioCadastro,
-          dataAlteracao: serial.dataAlteracao || '',
-          usuarioAlterou: serial.usuarioAlterou || ''
+          produtoId: serialData.produtoId,
+          serial: serialData.serial,
+          serialFabricante: serialData.serialFabricante,
+          dataGarantia: serialData.dataGarantia,
+          valorCusto: serialData.valorCusto.toString(),
+          status: serialData.status
         });
       }
     }
@@ -106,6 +96,13 @@ export const SerialEditPage: React.FC = () => {
 
   const handleNavigate = (path: string) => {
     navigate(path);
+  };
+
+  // Formatar data para exibição (dd/mm/aaaa)
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
   };
 
   return (
@@ -212,6 +209,60 @@ export const SerialEditPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Seção de Histórico */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Histórico
+            </h3>
+
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Original
+                    </th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Data
+                    </th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Usuário
+                    </th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Tipo
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {serial?.historico && serial.historico.length > 0 ? (
+                    serial.historico.map((record, index) => (
+                      <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                        <td className="py-3 px-4 text-sm font-medium text-gray-900">
+                          {record.original}
+                        </td>
+                        <td className="py-3 px-4 text-sm text-gray-700">
+                          {formatDate(record.data)}
+                        </td>
+                        <td className="py-3 px-4 text-sm text-gray-700">
+                          {record.usuario}
+                        </td>
+                        <td className="py-3 px-4 text-sm text-gray-700">
+                          {record.tipo}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="py-4 px-4 text-center text-sm text-gray-500">
+                        Nenhum registro de histórico encontrado
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div className="flex flex-col gap-1">
               <label className="text-sm font-medium text-gray-700">
@@ -222,7 +273,7 @@ export const SerialEditPage: React.FC = () => {
                 placeholder="Log da data"
                 disabled
                 className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
-                value={metadataFields.dataCadastro}
+                value={serial ? formatDate(serial.dataCadastro) : ''}
               />
             </div>
 
@@ -235,7 +286,7 @@ export const SerialEditPage: React.FC = () => {
                 placeholder="Log do usuário"
                 disabled
                 className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
-                value={metadataFields.usuarioCadastro}
+                value={serial?.usuarioCadastro || ''}
               />
             </div>
 
@@ -247,7 +298,7 @@ export const SerialEditPage: React.FC = () => {
                 type="text"
                 disabled
                 className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
-                value={metadataFields.dataAlteracao}
+                value={serial && serial.dataAlteracao ? formatDate(serial.dataAlteracao) : ''}
               />
             </div>
 
@@ -259,7 +310,7 @@ export const SerialEditPage: React.FC = () => {
                 type="text"
                 disabled
                 className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
-                value={metadataFields.usuarioAlterou}
+                value={serial?.usuarioAlterou || ''}
               />
             </div>
           </div>
