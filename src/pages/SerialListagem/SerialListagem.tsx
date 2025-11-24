@@ -15,6 +15,14 @@ export const SerialPage: React.FC = () => {
     navigate(path);
   };
 
+  const handleCadastrar = () => {
+    navigate('/serial/cadastration');
+  };
+
+  const handleEditar = () => {
+    navigate('/serial/edit');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
         <Navbar onNavigate={handleNavigate} />
@@ -131,6 +139,7 @@ export const SerialPage: React.FC = () => {
                     variant="primary"
                     size="sm"
                     icon={<Plus size={16} />}
+                    onClick={handleCadastrar}
                     >
                     Cadastrar
                     </Button>
@@ -183,7 +192,7 @@ export const SerialPage: React.FC = () => {
                                 <button className="p-2 rounded-lg bg-pink-500 hover:bg-pink-600 text-white transition-colors">
                                 <Info size={16} />
                                 </button>
-                                <button className="p-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-colors">
+                                <button className="p-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-colors" onClick={handleEditar}>
                                 <Edit size={16} />
                                 </button>
                                 <button className="p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors">

@@ -2,6 +2,7 @@ import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger' | 'warning';
+  onClick?: () => void;
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   children: React.ReactNode;
@@ -9,6 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
+  onClick,
   size = 'md',
   icon,
   children,
@@ -32,6 +34,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      onClick={onClick}
       className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
       {...props}
     >

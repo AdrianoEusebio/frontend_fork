@@ -9,6 +9,8 @@ import { ProductCadastration } from '../pages/ProductCadastration/ProductCadastr
 import { ProductEditPageWrapper } from '../pages/ProductEdit/ProductEditPage'
 import { TiposProduto } from '../pages/ProductType/ProductType'
 import { SerialPage } from '../pages/SerialListagem/SerialListagem'
+import { SerialFormPage } from '../pages/SerialCadastro/SerialCadastro'
+import { SerialEditPage } from '../pages/SerialEdit/SerialEdit'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -60,6 +62,14 @@ export default function AppRoutes() {
       <Route 
         path="/serial/list"
         element={isAuthenticated ? <SerialPage /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/serial/cadastration"
+        element={isAuthenticated ? <SerialFormPage /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/serial/edit"
+        element={isAuthenticated ? <SerialEditPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
