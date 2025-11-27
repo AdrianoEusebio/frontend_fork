@@ -15,6 +15,10 @@ export const CompaniesPage: React.FC = () => {
     navigate(path);
   };
 
+  const handleCadastro = () => {
+    navigate('/companies/cadastration')
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -44,7 +48,9 @@ export const CompaniesPage: React.FC = () => {
 
                 <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">Tabela de Empresas</h2>
-                <Button icon={<Plus className="w-4 h-4" />}>
+                <Button 
+                icon={<Plus className="w-4 h-4" />}
+                onClick={handleCadastro}>
                     Cadastrar
                 </Button>
                 </div>
