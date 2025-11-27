@@ -4,14 +4,14 @@ import { Phone, Link2, Edit, Trash2 } from 'lucide-react';
 interface ActionButtonsProps {
   onCall?: () => void;
   onLink?: () => void;
-  onEmail?: () => void;
+  onEdit?: () => void;
   onDelete?: () => void;
 }
 
 export const ActionButtons: React.FC<ActionButtonsProps> = ({
   onCall,
   onLink,
-  onEmail,
+  onEdit,
   onDelete
 }) => {
   return (
@@ -31,7 +31,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
         <Link2 className="w-4 h-4 text-white" />
       </button>
       <button
-        onClick={onEmail}
+        onClick={onEdit}
         className="w-7 h-7 rounded bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center transition-colors"
         title="Email"
       >

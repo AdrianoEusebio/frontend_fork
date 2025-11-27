@@ -13,6 +13,7 @@ import { SerialFormPage } from '../pages/SerialCadastro/SerialCadastro'
 import { SerialEditPage } from '../pages/SerialEdit/SerialEdit'
 import { CompaniesPage } from '../pages/CompaniesList/CompaniesList'
 import { CompanyFormPage } from '../pages/CompaniesCadastration/CompaniesCadastration'
+import { CompanyEditPage } from '../pages/CompaniesEdit/CompaniesEdit'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -80,6 +81,10 @@ export default function AppRoutes() {
       <Route 
         path="/companies/cadastration"
         element={isAuthenticated ? <CompanyFormPage /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/companies/edit"
+        element={isAuthenticated ? <CompanyEditPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -4,9 +4,10 @@ import { ActionButtons } from '@/components/Button/CompaniesListActionButton';
 
 interface CompanyTableProps {
   companies: Company[];
+  onEdit?: (companyId: string) => void;
 }
 
-export const CompanyTable: React.FC<CompanyTableProps> = ({ companies }) => {
+export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit }) => {
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden">
       <div className="overflow-x-auto">
@@ -78,7 +79,7 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({ companies }) => {
                   {company.cnpj}
                 </td>
                 <td className="px-3 py-3">
-                  <ActionButtons />
+                  <ActionButtons onEdit={() => onEdit?.(company.id)} />
                 </td>
               </tr>
             ))}
