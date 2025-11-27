@@ -6,7 +6,8 @@ import { Input } from '@/components/Input/CompaniesCadastrationInput';
 import { Select } from '@/components/Select/CompaniesCadastrationSelect';
 import { FormSection } from '@/components/Form/CompaniesCadastrationFormSection';
 import { FileUpload } from '@/components/Upload/ConpaniesCadastrationFileUpload';
-import { Navbar } from '@/components/Navbar/geralNavbar'
+import { CompaniesService } from '@/services/CompaniesService';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 
 
 export const CompanyFormPage: React.FC = () => {
@@ -46,7 +47,14 @@ export const CompanyFormPage: React.FC = () => {
   };
 
   const handleSalvar = () => {
-    console.log('Salvar', formData);
+    // Validação básica
+    if (!formData.nome || !formData.cnpj) {
+      alert('Preencha os campos obrigatórios (Nome e CNPJ)');
+      return;
+    }
+
+    CompaniesService.createCompany(formData);
+    alert('Empresa cadastrada com sucesso!');
     navigate('/companies/list');
   };
 

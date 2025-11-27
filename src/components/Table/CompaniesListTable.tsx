@@ -5,9 +5,10 @@ import { ActionButtons } from '@/components/Button/CompaniesListActionButton';
 interface CompanyTableProps {
   companies: Company[];
   onEdit?: (companyId: string) => void;
+  onDelete?: (companyId: string) => void;
 }
 
-export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit }) => {
+export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit, onDelete}) => {
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden">
       <div className="overflow-x-auto">
@@ -25,18 +26,6 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit })
               </th>
               <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
                 Endereço
-              </th>
-              <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
-                Telefone 1
-              </th>
-              <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
-                Telefone 2
-              </th>
-              <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
-                E-mail
-              </th>
-              <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
-                Website
               </th>
               <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
                 CNPJ
@@ -64,22 +53,13 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit })
                   {company.address}
                 </td>
                 <td className="px-3 py-3 text-[13px] text-gray-900">
-                  {company.phone1}
-                </td>
-                <td className="px-3 py-3 text-[13px] text-gray-900">
-                  {company.phone2}
-                </td>
-                <td className="px-3 py-3 text-[13px] text-gray-900">
-                  {company.email}
-                </td>
-                <td className="px-3 py-3 text-[13px] text-gray-900">
-                  {company.website}
-                </td>
-                <td className="px-3 py-3 text-[13px] text-gray-900">
                   {company.cnpj}
                 </td>
                 <td className="px-3 py-3">
-                  <ActionButtons onEdit={() => onEdit?.(company.id)} />
+                  <ActionButtons 
+                  onEdit={() => onEdit?.(company.id)}
+                  onDelete={() => onDelete?.(company.id)} 
+                  />
                 </td>
               </tr>
             ))}

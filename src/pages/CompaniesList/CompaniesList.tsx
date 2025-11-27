@@ -8,7 +8,6 @@ import { Navbar } from '@/components/Navbar/geralNavbar'
 
 export const CompaniesPage: React.FC = () => {
   const navigate = useNavigate();
-
   const { companies, loading, error } = useCompanies();
 
   const handleNavigate = (path: string) => {
@@ -19,8 +18,8 @@ export const CompaniesPage: React.FC = () => {
     navigate('/companies/cadastration')
   };
 
-  const handleEdit = () => {
-    navigate('/companies/edit')
+  const handleEdit = (companyId: string) => {
+    navigate(`/companies/edit/${companyId}`) // Agora passa o ID na URL
   };
 
   if (loading) {
@@ -41,26 +40,26 @@ export const CompaniesPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-        <Navbar onNavigate={handleNavigate} />
-            <div className="p-6">
-                <div className="mb-4">
-                <div className="text-sm text-gray-500 mb-2">
-                    Página / Cadastros Básicos / Empresas
-                </div>
-                <h1 className="text-3xl font-bold text-gray-900">Empresas</h1>
-                </div>
+      <Navbar onNavigate={handleNavigate} />
+      <div className="p-6">
+        <div className="mb-4">
+          <div className="text-sm text-gray-500 mb-2">
+            Página / Cadastros Básicos / Empresas
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900">Empresas</h1>
+        </div>
 
-                <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900">Tabela de Empresas</h2>
-                <Button 
-                icon={<Plus className="w-4 h-4" />}
-                onClick={handleCadastro}>
-                    Cadastrar
-                </Button>
-                </div>
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900">Tabela de Empresas</h2>
+          <Button 
+            icon={<Plus className="w-4 h-4" />}
+            onClick={handleCadastro}>
+            Cadastrar
+          </Button>
+        </div>
 
-                <CompanyTable companies={companies} onEdit={handleEdit}/>
-            </div>
+        <CompanyTable companies={companies} onEdit={handleEdit}/>
+      </div>
     </div>
   );
 };

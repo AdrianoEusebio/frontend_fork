@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Company, getCompanies } from '@/services/CompaniesMockData';
+import { Company } from '@/services/CompaniesMockData';
+import { CompaniesService } from '@/services/CompaniesService';
 
 export const useCompanies = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -10,7 +11,9 @@ export const useCompanies = () => {
     const fetchCompanies = async () => {
       try {
         setLoading(true);
-        const data = await getCompanies();
+        // Inicializa os dados se necessário
+        CompaniesService.initializeData();
+        const data = CompaniesService.getCompanies();
         setCompanies(data);
         setError(null);
       } catch (err) {
@@ -24,5 +27,9 @@ export const useCompanies = () => {
     fetchCompanies();
   }, []);
 
-  return { companies, loading, error };
+  const refreshCompanies = () => {
+    setCompanies(CompaniesService.getCompanies());
+  };
+
+  return { companies, loading, error, refreshCompanies };
 };

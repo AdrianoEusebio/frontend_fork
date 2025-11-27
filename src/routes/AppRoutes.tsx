@@ -83,7 +83,7 @@ export default function AppRoutes() {
         element={isAuthenticated ? <CompanyFormPage /> : <Navigate to="/login" />}
       />
       <Route 
-        path="/companies/edit"
+        path="/companies/edit/:id"
         element={isAuthenticated ? <CompanyEditPage /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
