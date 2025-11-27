@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Link2, Mail, Trash2 } from 'lucide-react';
+import { Phone, Link2, Edit, Trash2 } from 'lucide-react';
 
 interface ActionButtonsProps {
   onCall?: () => void;
@@ -35,7 +35,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
         className="w-7 h-7 rounded bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center transition-colors"
         title="Email"
       >
-        <Mail className="w-4 h-4 text-white" />
+        <Edit className="w-4 h-4 text-white" />
       </button>
       <button
         onClick={onDelete}
