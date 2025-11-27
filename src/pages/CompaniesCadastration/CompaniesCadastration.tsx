@@ -5,10 +5,12 @@ import { Button } from '@/components/Button/CompaniesCadastrationButton';
 import { Input } from '@/components/Input/CompaniesCadastrationInput';
 import { Select } from '@/components/Select/CompaniesCadastrationSelect';
 import { FormSection } from '@/components/Form/CompaniesCadastrationFormSection';
+import { FileUpload } from '@/components/Upload/ConpaniesCadastrationFileUpload';
 import { Navbar } from '@/components/Navbar/geralNavbar'
 
 
 export const CompanyFormPage: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState<'dados' | 'logo'>('dados');
   const [formData, setFormData] = useState({
     nome: '',
     razaoSocial: '',
@@ -28,11 +30,15 @@ export const CompanyFormPage: React.FC = () => {
   };
 
   const handleVoltar = () => {
-    console.log('Voltar');
+    if (currentStep === 'logo') {
+      setCurrentStep('dados');
+    }
   };
 
   const handleAvancar = () => {
-    console.log('Avançar', formData);
+    if (currentStep === 'dados') {
+      setCurrentStep('logo');
+    }
   };
 
   const handleCancelar = () => {
@@ -63,25 +69,31 @@ export const CompanyFormPage: React.FC = () => {
                 <h2 className="text-xl font-bold text-gray-900 mb-8">Cadastro de Empresa</h2>
 
                 <div className="border-t-2 border-blue-500 pt-8">
-                    <div className="grid grid-cols-2 gap-x-16">
-                        <FormSection
+                    <div className="flex justify-center items-center gap-24 mb-8">
+                    <FormSection
                         title="Dados Principais"
                         icon={<FileText className="w-6 h-6 text-white" />}
-                        />
-
-                        <FormSection
+                        active={currentStep === 'dados'}
+                        onClick={() => setCurrentStep('dados')}
+                    />
+                    <div className="w-32 h-0.5 bg-gray-300"></div>
+                    <FormSection
                         title="Logo da Empresa"
                         icon={<Image className="w-6 h-6 text-white" />}
-                        ></FormSection>
+                        active={currentStep === 'logo'}
+                        onClick={() => setCurrentStep('logo')}
+                    />
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
+                    {currentStep === 'dados' ? (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-3 gap-4">
                         <Input
-                            label="Nome"
-                            placeholder="Informe um nome"
-                            value={formData.nome}
-                            onChange={(value) => handleInputChange('nome', value)}
-                            required
+                        label="Nome"
+                        placeholder="Informe um nome"
+                        value={formData.nome}
+                        onChange={(value) => handleInputChange('nome', value)}
+                        required
                         />
 
                         <Input
@@ -104,68 +116,83 @@ export const CompanyFormPage: React.FC = () => {
                             ]}
                             required
                         />
-                    </div>
+                        </div>
 
-                    <div className="grid grid-cols-4 gap-x-4">
+                        <div className="grid grid-cols-4 gap-4">
                         <Input
-                        label="Slogan"
-                        placeholder="Informe o slogan"
-                        value={formData.slogan}
-                        onChange={(value) => handleInputChange('slogan', value)}
-                        required
+                            label="Slogan"
+                            placeholder="Informe o slogan"
+                            value={formData.slogan}
+                            onChange={(value) => handleInputChange('slogan', value)}
+                            required
                         />
 
                         <Input
-                        label="CNPJ"
-                        placeholder="Informe o slogan"
-                        value={formData.cnpj}
-                        onChange={(value) => handleInputChange('cnpj', value)}
-                        required
+                            label="CNPJ"
+                            placeholder="Informe o CNPJ"
+                            value={formData.cnpj}
+                            onChange={(value) => handleInputChange('cnpj', value)}
+                            required
                         />
 
                         <Input
-                        label="Inscrição Estadual"
-                        placeholder="Informe o slogan"
-                        value={formData.inscricaoEstadual}
-                        onChange={(value) => handleInputChange('inscricaoEstadual', value)}
-                        required
+                            label="Inscrição Estadual"
+                            placeholder="Informe a inscrição"
+                            value={formData.inscricaoEstadual}
+                            onChange={(value) => handleInputChange('inscricaoEstadual', value)}
+                            required
                         />
 
                         <Input
-                        label="Inscrição Municipal"
-                        placeholder="Informe o slogan"
-                        value={formData.inscricaoMunicipal}
-                        onChange={(value) => handleInputChange('inscricaoMunicipal', value)}
-                        required
+                            label="Inscrição Municipal"
+                            placeholder="Informe a inscrição"
+                            value={formData.inscricaoMunicipal}
+                            onChange={(value) => handleInputChange('inscricaoMunicipal', value)}
+                            required
                         />
-                    </div>
+                        </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                         <Input
-                        label="CPF do Representante"
-                        placeholder="Informe o CPF"
-                        value={formData.cpfRepresentante}
-                        onChange={(value) => handleInputChange('cpfRepresentante', value)}
-                        required
+                            label="CPF do Representante"
+                            placeholder="Informe o CPF"
+                            value={formData.cpfRepresentante}
+                            onChange={(value) => handleInputChange('cpfRepresentante', value)}
+                            required
                         />
 
                         <Input
-                        label="Nome do Representante"
-                        placeholder="Informe o nome do Representante"
-                        value={formData.nomeRepresentante}
-                        onChange={(value) => handleInputChange('nomeRepresentante', value)}
-                        required
+                            label="Nome do Representante"
+                            placeholder="Informe o nome do Representante"
+                            value={formData.nomeRepresentante}
+                            onChange={(value) => handleInputChange('nomeRepresentante', value)}
+                            required
                         />
-                    </div>
-                </div>
+                        </div>
 
-                <div className="flex justify-center gap-3 mt-6">
+                        <div className="flex justify-center gap-3 mt-6">
                         <Button variant="secondary" onClick={handleVoltar}>
-                        Voltar
+                            Voltar
                         </Button>
                         <Button onClick={handleAvancar}>
-                        Avançar
+                            Avançar
                         </Button>
+                        </div>
+                    </div>
+                    ) : (
+                    <div className="space-y-4">
+                        <FileUpload />
+
+                        <div className="flex justify-center gap-3 mt-6">
+                        <Button variant="secondary" onClick={handleVoltar}>
+                            Voltar
+                        </Button>
+                        <Button onClick={handleAvancar}>
+                            Avançar
+                        </Button>
+                        </div>
+                    </div>
+                    )}
                 </div>
 
                 <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
@@ -181,3 +208,4 @@ export const CompanyFormPage: React.FC = () => {
     </div>
   );
 };
+
