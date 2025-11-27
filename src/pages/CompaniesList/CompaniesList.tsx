@@ -19,6 +19,10 @@ export const CompaniesPage: React.FC = () => {
     navigate('/companies/cadastration')
   };
 
+  const handleEdit = () => {
+    navigate('/companies/edit')
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -55,7 +59,7 @@ export const CompaniesPage: React.FC = () => {
                 </Button>
                 </div>
 
-                <CompanyTable companies={companies} />
+                <CompanyTable companies={companies} onEdit={handleEdit}/>
             </div>
     </div>
   );
