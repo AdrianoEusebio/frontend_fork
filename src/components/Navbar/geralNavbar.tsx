@@ -64,6 +64,10 @@ const defaultCadastrosBasicos: MenuCategory[] = [
       {
         label: 'Serial',
         path: '/serial/list'
+      },
+      {
+        label: 'Empresas',
+        path: '/companies'
       }
     ],
   },
