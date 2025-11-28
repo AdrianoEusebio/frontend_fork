@@ -132,7 +132,6 @@ export const CompanyFormPage: React.FC = () => {
                             placeholder="Informe o slogan"
                             value={formData.slogan}
                             onChange={(value) => handleInputChange('slogan', value)}
-                            required
                         />
 
                         <Input

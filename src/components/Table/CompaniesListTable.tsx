@@ -30,7 +30,8 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit, o
               <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
                 CNPJ
               </th>
-              <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide">
+              <th className="px-3 py-2.5 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wide w-20">
+                {/* Coluna de ações - largura fixa */}
               </th>
             </tr>
           </thead>
@@ -55,11 +56,13 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({ companies, onEdit, o
                 <td className="px-3 py-3 text-[13px] text-gray-900">
                   {company.cnpj}
                 </td>
-                <td className="px-3 py-3">
-                  <ActionButtons 
-                  onEdit={() => onEdit?.(company.id)}
-                  onDelete={() => onDelete?.(company.id)} 
-                  />
+                <td className="px-3 py-3 text-right w-20">
+                  <div className="flex justify-end gap-1 pr-1">
+                    <ActionButtons 
+                      onEdit={() => onEdit?.(company.id)}
+                      onDelete={() => onDelete?.(company.id)} 
+                    />
+                  </div>
                 </td>
               </tr>
             ))}
