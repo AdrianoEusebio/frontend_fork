@@ -5,10 +5,11 @@ import { Button } from '@/components/Button/CompaniesListButton';
 import { CompanyTable } from '@/components/Table/CompaniesListTable';
 import { useCompanies } from '@/hooks/useCompanies';
 import { Navbar } from '@/components/Navbar/geralNavbar'
+import { CompaniesService } from '@/services/CompaniesService';
 
 export const CompaniesPage: React.FC = () => {
   const navigate = useNavigate();
-  const { companies, loading, error } = useCompanies();
+  const { companies, loading, error, refreshCompanies } = useCompanies();
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -20,6 +21,18 @@ export const CompaniesPage: React.FC = () => {
 
   const handleEdit = (companyId: string) => {
     navigate(`/companies/edit/${companyId}`) // Agora passa o ID na URL
+  };
+
+  const handleDelete = (companyId: string) => {
+    if (window.confirm('Tem certeza que deseja excluir esta empresa?')) {
+      const success = CompaniesService.deleteCompany(companyId);
+      if (success) {
+        alert('Empresa excluída com sucesso!');
+        refreshCompanies(); // Atualiza a lista após exclusão
+      } else {
+        alert('Erro ao excluir empresa');
+      }
+    }
   };
 
   if (loading) {
@@ -58,7 +71,7 @@ export const CompaniesPage: React.FC = () => {
           </Button>
         </div>
 
-        <CompanyTable companies={companies} onEdit={handleEdit}/>
+        <CompanyTable companies={companies} onEdit={handleEdit} onDelete={handleDelete}/>
       </div>
     </div>
   );
