@@ -98,7 +98,7 @@ export default function AppRoutes() {
         element={isAuthenticated ? <StorageLocationRegistration /> : <Navigate to="/login" />}
       />
       <Route 
-        path="/storage/edit"
+        path="/storage/edit/:id"
         element={isAuthenticated ? <StorageLocationEdit /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
