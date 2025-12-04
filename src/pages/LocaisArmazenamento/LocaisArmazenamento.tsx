@@ -16,7 +16,6 @@ export const StorageLocations: React.FC = () => {
     filters,
     updateFilters,
     clearFilters,
-    handleEdit,
     handleDelete,
   } = useStorageLocations();
 
@@ -28,6 +27,10 @@ export const StorageLocations: React.FC = () => {
 
   const handleCreate = () => {
     navigate('/storage/cadastration');
+  };
+
+  const handleEdit = (id: number) => {
+    navigate('/storage/edit');
   };
 
   const breadcrumbItems = [

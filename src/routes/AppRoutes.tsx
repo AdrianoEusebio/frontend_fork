@@ -16,6 +16,7 @@ import { CompanyFormPage } from '../pages/CompaniesCadastration/CompaniesCadastr
 import { CompanyEditPage } from '../pages/CompaniesEdit/CompaniesEdit'
 import { StorageLocations } from '../pages/LocaisArmazenamento/LocaisArmazenamento'
 import { StorageLocationRegistration } from '../pages/LocaisArmazenamentosRegistration/LocaisArmazenamentoRegistration'
+import { StorageLocationEdit } from '../pages/LocaisArmazenamentoEdit/LocaisArmazenamentoEdit'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -95,6 +96,10 @@ export default function AppRoutes() {
       <Route 
         path="/storage/cadastration"
         element={isAuthenticated ? <StorageLocationRegistration /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/storage/edit"
+        element={isAuthenticated ? <StorageLocationEdit /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

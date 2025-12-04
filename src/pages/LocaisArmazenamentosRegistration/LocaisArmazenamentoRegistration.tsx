@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Input } from '@/components/Input/LocaisArmazenamentoRegistrationInput';
 import { Select } from '@/components/Select/LocaisArmazenamentoRegistrationSelect';
-import { RadioGroup } from '@/components/RadioGroup/LocaisArmazenamentoRegistrationGroupRadio';
+import { RadioGroup } from '@/components/Radio/LocaisArmazenamentoRegistrationGroupRadio';
 import { TextArea } from '@/components/Textarea/LocaisArmazenamentoRegistrationTextArea';
 import { Button } from '@/components/Button/LocaisArmazenamentoRegistrationButton';
 import { useNavigate } from 'react-router-dom';

@@ -38,16 +38,8 @@ export const useStorageLocations = () => {
     setFilters({ description: '' });
   };
 
-  const handleEdit = (id: number) => {
-    console.log('Edit location:', id);
-  };
-
   const handleDelete = (id: number) => {
     console.log('Delete location:', id);
-  };
-
-  const handleCreate = () => {
-    console.log('Create new location');
   };
 
   return {
@@ -55,8 +47,6 @@ export const useStorageLocations = () => {
     filters,
     updateFilters,
     clearFilters,
-    handleEdit,
     handleDelete,
-    handleCreate,
   };
 };
