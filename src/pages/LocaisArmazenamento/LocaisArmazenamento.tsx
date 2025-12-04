@@ -18,13 +18,16 @@ export const StorageLocations: React.FC = () => {
     clearFilters,
     handleEdit,
     handleDelete,
-    handleCreate,
   } = useStorageLocations();
 
   const navigate = useNavigate();
 
   const handleNavigate = (path: string) => {
     navigate(path);
+  };
+
+  const handleCreate = () => {
+    navigate('/storage/cadastration');
   };
 
   const breadcrumbItems = [
