@@ -14,6 +14,7 @@ import { SerialEditPage } from '../pages/SerialEdit/SerialEdit'
 import { CompaniesPage } from '../pages/CompaniesList/CompaniesList'
 import { CompanyFormPage } from '../pages/CompaniesCadastration/CompaniesCadastration'
 import { CompanyEditPage } from '../pages/CompaniesEdit/CompaniesEdit'
+import { StorageLocations } from '../pages/LocaisArmazenamento/LocaisArmazenamento'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -85,6 +86,10 @@ export default function AppRoutes() {
       <Route 
         path="/companies/edit/:id"
         element={isAuthenticated ? <CompanyEditPage /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/storage"
+        element={isAuthenticated ? <StorageLocations /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -7,6 +7,8 @@ import { Input } from '@/components/Input/LocaisArmazenamentoInput';
 import { Table } from '@/components/Table/LocaisArmazenamentoTable';
 import { useStorageLocations } from '@/hooks/useLocaisArmazenamentos';
 import { StorageLocation } from '@/services/LocaisArmazenamentoMockData';
+import { useNavigate } from 'react-router-dom';
+import { Navbar } from '@/components/Navbar/geralNavbar';
 
 export const StorageLocations: React.FC = () => {
   const {
@@ -18,6 +20,12 @@ export const StorageLocations: React.FC = () => {
     handleDelete,
     handleCreate,
   } = useStorageLocations();
+
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   const breadcrumbItems = [
     { label: 'Páginas', href: '#' },
@@ -99,72 +107,73 @@ export const StorageLocations: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-[1600px] mx-auto px-6 py-6">
-        <Breadcrumb items={breadcrumbItems} />
+      <Navbar onNavigate={handleNavigate} />
+        <div className="max-w-[1600px] mx-auto px-6 py-6">
+          <Breadcrumb items={breadcrumbItems} />
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          Locais de Armazenamento
-        </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">
+            Locais de Armazenamento
+          </h1>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Filtro</h2>
-            <div className="flex items-center space-x-3">
-              <Button
-                onClick={clearFilters}
-                variant="danger"
-                icon={X}
-                size="sm"
-              >
-                Limpar
-              </Button>
-              <Button
-                onClick={() => {}}
-                variant="primary"
-                icon={Filter}
-                size="sm"
-              >
-                Filtrar
-              </Button>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Filtro</h2>
+              <div className="flex items-center space-x-3">
+                <Button
+                  onClick={clearFilters}
+                  variant="danger"
+                  icon={X}
+                  size="sm"
+                >
+                  Limpar
+                </Button>
+                <Button
+                  onClick={() => {}}
+                  variant="primary"
+                  icon={Filter}
+                  size="sm"
+                >
+                  Filtrar
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Input
+                label="Descrição:"
+                placeholder="Informe uma descrição"
+                value={filters.description}
+                onChange={(value) => updateFilters({ description: value })}
+              />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Input
-              label="Descrição:"
-              placeholder="Informe uma descrição"
-              value={filters.description}
-              onChange={(value) => updateFilters({ description: value })}
-            />
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">
+                Tabela de Locais de Armazenamento
+              </h2>
+              <Button
+                onClick={handleCreate}
+                variant="primary"
+                icon={Plus}
+                size="sm"
+              >
+                Cadastrar
+              </Button>
+            </div>
+
+            <div className="overflow-hidden">
+              <Table data={storageLocations} columns={columns} />
+            </div>
           </div>
+
+          {storageLocations.length === 0 && (
+            <div className="text-center py-12 text-gray-500">
+              Nenhum local de armazenamento encontrado
+            </div>
+          )}
         </div>
-
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Tabela de Locais de Armazenamento
-            </h2>
-            <Button
-              onClick={handleCreate}
-              variant="primary"
-              icon={Plus}
-              size="sm"
-            >
-              Cadastrar
-            </Button>
-          </div>
-
-          <div className="overflow-hidden">
-            <Table data={storageLocations} columns={columns} />
-          </div>
-        </div>
-
-        {storageLocations.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            Nenhum local de armazenamento encontrado
-          </div>
-        )}
-      </div>
     </div>
   );
 };
