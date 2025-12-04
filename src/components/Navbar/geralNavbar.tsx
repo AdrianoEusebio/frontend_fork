@@ -68,6 +68,10 @@ const defaultCadastrosBasicos: MenuCategory[] = [
       {
         label: 'Empresas',
         path: '/companies/list'
+      },
+      {
+        label: 'Locais de Armazenamento',
+        path: '/storage'
       }
     ],
   },
