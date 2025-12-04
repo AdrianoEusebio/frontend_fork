@@ -15,6 +15,7 @@ import { CompaniesPage } from '../pages/CompaniesList/CompaniesList'
 import { CompanyFormPage } from '../pages/CompaniesCadastration/CompaniesCadastration'
 import { CompanyEditPage } from '../pages/CompaniesEdit/CompaniesEdit'
 import { StorageLocations } from '../pages/LocaisArmazenamento/LocaisArmazenamento'
+import { StorageLocationRegistration } from '../pages/LocaisArmazenamentosRegistration/LocaisArmazenamentoRegistration'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
@@ -90,6 +91,10 @@ export default function AppRoutes() {
       <Route 
         path="/storage"
         element={isAuthenticated ? <StorageLocations /> : <Navigate to="/login" />}
+      />
+      <Route 
+        path="/storage/cadastration"
+        element={isAuthenticated ? <StorageLocationRegistration /> : <Navigate to="/login" />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
