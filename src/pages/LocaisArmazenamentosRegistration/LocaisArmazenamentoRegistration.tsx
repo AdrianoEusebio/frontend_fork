@@ -141,7 +141,7 @@ export function StorageLocationRegistration() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar onNavigate={handleNavigate} />
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="px-6 py-4">
         <div className="mb-6">
           <div className="text-sm text-gray-500 mb-2">
             Páginas / Cadastros Básicos / Locais de Armazenamento
@@ -149,7 +149,7 @@ export function StorageLocationRegistration() {
           <h1 className="text-3xl font-bold text-gray-900">Locais de Armazenamento</h1>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
             Cadastro de Local de Armazenamento
           </h2>
